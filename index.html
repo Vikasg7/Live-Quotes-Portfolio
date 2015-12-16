@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="angular.js"></script>
+		<script type="text/javascript" src="main.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+
+	<body ng-app="liveQuotesPortfolio" ng-controller="bodyCtrl" ng-csp>
+		<input type="text" ng-model="symbol" ng-keypress="addSymbol($event)">
+		<div id="container">
+			<table>
+				
+				<thead>
+					<tr>
+						<th>Symbol</th>
+						<th>Price</th>
+						<th>Change</th>
+						<th>%Change</th>
+						<th>Target</th>
+						<th>Stoploss</th>						
+						<th>Shares</th>
+						<th>Cost</th>
+						<th>Investment</th>
+						<th>Value</th>
+						<th>Return</th>
+						<th>%Return</th>
+					</tr>
+				</thead>
+					
+				<tbody>
+					<tr ng-repeat="ele in list">
+						<td>{{ele.e + ":" + ele.t | uppercase}}</td>
+						<td>{{ele.l | number:2}}</td>
+						<td>{{ele.c | number:2}}</td>
+						<td>{{ele.cp | number:2}}</td>
+						<td class="input"><input type="text" ng-model="target[$index]"></td>
+						<td class="input"><input type="text" ng-model="stoploss[$index]"></td>
+						<td class="input"><input type="text" ng-model="shares[$index]"></td>
+						<td class="input"><input type="text" ng-model="cost[$index]"></td>
+						<td>{{cost[$index] * shares[$index] | number:2}}</td>
+						<td>{{ele.l * shares[$index] | number:2}}</td>
+						<td>{{(ele.l - cost[$index]) * shares[$index] | number:2}}</td>
+						<td>{{shares[$index]  && (ele.l - cost[$index])/cost[$index] | number:2}}</td>	
+					</tr>
+				</tbody>
+
+				<tfoot>
+				</tfoot>
+			</table>
+		</div>
+	<script type="text/javascript" src="jquery.js"></script>
+	</body>
+</html>

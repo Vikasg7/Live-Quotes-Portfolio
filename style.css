@@ -1,0 +1,89 @@
+body {
+	padding: 0;
+	margin: 0;
+	font-family: Arial;
+	font-size: 12px;
+}
+
+table {
+	margin: 0;
+	border-collapse: collapse;
+}
+
+tbody td {
+	border: 1px solid #E3E3E3;
+	text-align: right;
+	padding-right: 2px;
+	padding-left: 5px;
+	font-size: 12px;
+}
+
+
+.input {
+	width: 45px;
+}
+
+thead th {
+	border: 1px solid #E3E3E3;
+	color: white;
+	background-color: #5B86B1;
+	padding-right: 2px;
+	padding-left: 2px;
+}
+
+tbody input {
+	width: inherit;
+	background-color: inherit;
+	border: none;
+	font-size: inherit;
+	text-align: inherit;
+	padding-right: inherit;
+	padding-left: inherit;
+}
+
+tbody tr:nth-child(odd){
+	background-color: whitesmoke;/*#E7EDF0;*/
+}
+
+td:first-child , th:first-child {
+	padding-left: 1px;
+	padding-right: 2px;
+	text-align: left;
+}
+
+tbody td.close {
+	text-align: center;
+	padding: 0;
+	cursor: pointer;
+	color: #5B86B1;
+	font-weight: bold;
+	background-color: white;
+	border: 0px none;
+	padding-top:1px;
+}
+/*
+table tr:hover {
+	background-color: #D0E2EA;
+}
+*/
+
+tbody td.close:hover {
+	background-color: #D0E2EA;
+	border: 1px solid #E3E3E3;
+}
+
+tfoot tr {
+	border-bottom-color: lightgrey;
+	border-bottom-style: double;
+}
+
+tfoot tr td {
+	border-top-color: lightgrey;
+	border-top-style: double;
+	font-weight: bold;
+}
+
+thead span {
+	margin: 0px;
+	font-size: 12px;
+}
