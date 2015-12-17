@@ -2,7 +2,6 @@
 <html>
 	<head>
 		<script type="text/javascript" src="angular.js"></script>
-		<script type="text/javascript" src="main.js"></script>
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 
@@ -29,19 +28,20 @@
 				</thead>
 					
 				<tbody>
-					<tr ng-repeat="ele in list">
+					<tr ng-repeat="ele in list track by (ele.e + ele.t)">
 						<td>{{ele.e + ":" + ele.t | uppercase}}</td>
-						<td>{{ele.l | number:2}}</td>
-						<td>{{ele.c | number:2}}</td>
-						<td>{{ele.cp | number:2}}</td>
+						<td>{{ele.l}}</td>
+						<td>{{ele.c}}</td>
+						<td>{{ele.cp}}</td>
 						<td class="input"><input type="text" ng-model="target[$index]"></td>
 						<td class="input"><input type="text" ng-model="stoploss[$index]"></td>
 						<td class="input"><input type="text" ng-model="shares[$index]"></td>
 						<td class="input"><input type="text" ng-model="cost[$index]"></td>
-						<td>{{cost[$index] * shares[$index] | number:2}}</td>
-						<td>{{ele.l * shares[$index] | number:2}}</td>
-						<td>{{(ele.l - cost[$index]) * shares[$index] | number:2}}</td>
-						<td>{{shares[$index]  && (ele.l - cost[$index])/cost[$index] | number:2}}</td>	
+						<td>{{shares[$index] && cost[$index]  && cost[$index] * shares[$index] | number:2}}</td>
+						<td>{{shares[$index] && cost[$index]  && ele.l * shares[$index] | number:2}}</td>
+						<td>{{shares[$index] && cost[$index]  && (ele.l - cost[$index]) * shares[$index] | number:2}}</td>
+						<td>{{shares[$index] && cost[$index]  && (ele.l - cost[$index])/cost[$index] | number:2}}</td>
+						<td class="close" ng-click="delRow(ele.t, $index, $event)">&nbsp;-&nbsp;</td>
 					</tr>
 				</tbody>
 
@@ -50,5 +50,6 @@
 			</table>
 		</div>
 	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="main.js"></script>
 	</body>
 </html>
