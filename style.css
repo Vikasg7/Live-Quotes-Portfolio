@@ -14,10 +14,9 @@ tbody td {
 	border: 1px solid #E3E3E3;
 	text-align: right;
 	padding-right: 2px;
-	padding-left: 5px;
+	padding-left: 2px;
 	font-size: 12px;
 }
-
 
 .input {
 	width: 45px;
@@ -38,7 +37,6 @@ tbody input {
 	font-size: inherit;
 	text-align: inherit;
 	padding-right: inherit;
-	padding-left: inherit;
 }
 
 tbody tr:nth-child(odd){

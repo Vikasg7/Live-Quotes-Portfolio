@@ -1,5 +1,6 @@
 var symbols //hold symbols to be scraped
-	symbols = localStorage.symbols ? JSON.parse(localStorage.symbols) : []
+	symbols   = localStorage.symbols ? JSON.parse(localStorage.symbols) : {}
+var inputSyms = []
 
 var stockData = [] //for holding stock data from ajax request
 var interval  = 60 //in seconds
@@ -15,11 +16,17 @@ chrome.extension.onRequest.addListener(function (request) {
 })
 
 function fetch() {
-	if (symbols.length === 0) { stockData = []; chrome.extension.sendRequest({action: "updateView"}); return }
+	if (getValues(symbols).length === 0 && inputSyms.length === 0) { 
+		print("NO symbols")
+		stockData = []
+		chrome.extension.sendRequest({action: "updateView"})
+		return 
+	}
 
-	var url = "https://www.google.com/finance/info?client=ob&hl=en-IN&q=" + encodeURIComponent(symbols.join(",").toUpperCase())
-	
-	jQuery.ajax({url: url})
+	var syms = getValues(symbols).concat(inputSyms).sort()
+	inputSyms = []
+	var url = "https://www.google.com/finance/info?client=ob&hl=en-IN&q=" + encodeURIComponent(syms.join(","))
+	$.ajax({url: url})
 	  .then(function (data, status, xhr) {
 		if (status !== "success") { print("Couldn't fetch!!"); return }
 		print("fetching data!!")
@@ -29,3 +36,8 @@ function fetch() {
 }
 
 function print() { console.log.apply(console, arguments) }
+
+function getValues(obj) {
+	var val = Object.keys(obj).map(function (key) { return obj[key] })
+	return val
+}

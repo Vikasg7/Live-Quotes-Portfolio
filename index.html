@@ -12,7 +12,7 @@
 				
 				<thead>
 					<tr>
-						<th>Symbol</th>
+						<th>Ex:Symbol</th>
 						<th>Price</th>
 						<th>Change</th>
 						<th>%Change</th>
@@ -22,26 +22,26 @@
 						<th>Cost</th>
 						<th>Investment</th>
 						<th>Value</th>
-						<th>Return</th>
-						<th>%Return</th>
+						<th>ROI</th>
+						<th>%ROI</th>
 					</tr>
 				</thead>
 					
 				<tbody>
-					<tr ng-repeat="ele in list track by (ele.e + ele.t)">
+					<tr ng-repeat="ele in list track by (ele.id)">
 						<td>{{ele.e + ":" + ele.t | uppercase}}</td>
 						<td>{{ele.l}}</td>
 						<td>{{ele.c}}</td>
 						<td>{{ele.cp}}</td>
-						<td class="input"><input type="text" ng-model="target[$index]"></td>
-						<td class="input"><input type="text" ng-model="stoploss[$index]"></td>
-						<td class="input"><input type="text" ng-model="shares[$index]"></td>
-						<td class="input"><input type="text" ng-model="cost[$index]"></td>
-						<td>{{shares[$index] && cost[$index]  && cost[$index] * shares[$index] | number:2}}</td>
-						<td>{{shares[$index] && cost[$index]  && ele.l * shares[$index] | number:2}}</td>
-						<td>{{shares[$index] && cost[$index]  && (ele.l - cost[$index]) * shares[$index] | number:2}}</td>
-						<td>{{shares[$index] && cost[$index]  && (ele.l - cost[$index])/cost[$index] | number:2}}</td>
-						<td class="close" ng-click="delRow(ele.t, $index, $event)">&nbsp;-&nbsp;</td>
+						<td class="input"><input type="text" ng-model="target[ele.id]"></td>
+						<td class="input"><input type="text" ng-model="stoploss[ele.id]"></td>
+						<td class="input"><input type="text" ng-model="shares[ele.id]"></td>
+						<td class="input"><input type="text" ng-model="cost[ele.id]"></td>
+						<td>{{investment(ele)}}</td>
+						<td>{{value(ele)}}</td>
+						<td>{{ROI(ele)}}</td>
+						<td>{{percentROI(ele)}}</td>
+						<td class="close" ng-click="delRow(ele)">&nbsp;-&nbsp;</td>
 					</tr>
 				</tbody>
 
