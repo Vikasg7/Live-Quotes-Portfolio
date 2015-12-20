@@ -29,24 +29,38 @@
 					
 				<tbody>
 					<tr ng-repeat="ele in list track by (ele.id)">
-						<td>{{ele.e + ":" + ele.t | uppercase}}</td>
+						<td>{{ele.t | uppercase}}</td>
 						<td>{{ele.l}}</td>
-						<td>{{ele.c}}</td>
-						<td>{{ele.cp}}</td>
+						<td color-up>{{ele.c}}</td>
+						<td color-up>{{ele.cp}}</td>
 						<td class="input"><input type="text" ng-model="target[ele.id]"></td>
 						<td class="input"><input type="text" ng-model="stoploss[ele.id]"></td>
 						<td class="input"><input type="text" ng-model="shares[ele.id]"></td>
 						<td class="input"><input type="text" ng-model="cost[ele.id]"></td>
-						<td>{{investment(ele)}}</td>
-						<td>{{value(ele)}}</td>
-						<td>{{ROI(ele)}}</td>
-						<td>{{percentROI(ele)}}</td>
+						<td>{{investment(ele) | number:2}}</td>
+						<td>{{value(ele) | number:2}}</td>
+						<td color-up>{{ROI(ele) | number:2}}</td>
+						<td color-up>{{percentROI(ele) | number:2}}</td>
 						<td class="close" ng-click="delRow(ele)">&nbsp;-&nbsp;</td>
 					</tr>
 				</tbody>
 
 				<tfoot>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>{{tInvestment() | number:2}}</td>
+					<td>{{tValue() | number:2}}</td>
+					<td color-up>{{tROI() | number:2}}</td>
+					<td color-up>{{tPercentROI() | number:2}}</td>
+					<td></td>
 				</tfoot>
+
 			</table>
 		</div>
 	<script type="text/javascript" src="jquery.js"></script>

@@ -1,6 +1,8 @@
 var bg  = chrome.extension.getBackgroundPage() 
-var app = angular.module("liveQuotesPortfolio", [])
-	app.controller("bodyCtrl", bodyCtrl)
+//initialising app and attaching stuff
+angular.module("liveQuotesPortfolio", [])
+	.controller("bodyCtrl", bodyCtrl)
+	.directive("colorUp", colorUp)
 
 function bodyCtrl($scope, $window, $filter) {
 	$window.onunload = beforeUnload
@@ -17,30 +19,58 @@ function bodyCtrl($scope, $window, $filter) {
 	$scope.value		= value
 	$scope.ROI 			= ROI
 	$scope.percentROI 	= percentROI
+	$scope.tInvestment 	= tInvestment
+	$scope.tValue		= tValue
+	$scope.tROI			= tROI
+	$scope.tPercentROI	= tPercentROI
 	
 	$scope.addSymbol 	= addSymbol
-	$scope.delRow 		= delRow
+	$scope.delRow 		= delRow	
 
 	function investment(ele) {
 		var invest = $scope.shares[ele.id] && $scope.cost[ele.id]  ? $scope.cost[ele.id] * $scope.shares[ele.id] : null
-		return $filter("number")(invest,2)
+		return invest
 	}
 
 	function value(ele) {
 		var val = $scope.shares[ele.id] ? deComma(ele.l) * $scope.shares[ele.id] : null
-		return $filter("number")(val, 2)
+		return val
 	}
 
 	function ROI(ele) {
 		var ROI = deComma($scope.value(ele)) - deComma($scope.investment(ele))
 		ROI = $scope.shares[ele.id] && $scope.cost[ele.id] ? ROI : null
-		return $filter("number")(ROI, 2)
+		return ROI
 	}
 
 	function percentROI(ele) {
 		var percentROI = deComma($scope.ROI(ele)) * 100 / deComma($scope.investment(ele))
 		percentROI = $scope.shares[ele.id] && $scope.cost[ele.id] ? percentROI : null
-		return $filter("number")(percentROI, 2)
+		return percentROI
+	}
+
+	function tInvestment() {
+		var total = 0
+		$scope.list.forEach(function (el, i){ total = total + $scope.investment(el)	})
+		return total
+	}
+
+	function tValue() {
+		var total = 0
+		$scope.list.forEach(function (el, i){ total = total + $scope.value(el)	})
+		return total
+	}
+
+	function tROI() {
+		var total = 0
+		$scope.list.forEach(function (el, i){ total = total + $scope.ROI(el) })
+		return total
+	}
+
+	function tPercentROI() {
+		var total = 0
+		total = $scope.tROI() * 100 / $scope.tInvestment()
+		return (total ? total : "")
 	}
 
 	function addSymbol($event) {
@@ -89,6 +119,26 @@ function bodyCtrl($scope, $window, $filter) {
 
 }
 
+function colorUp(){
+	return {
+		restrict: "A",
+		link: linkFunc
+	}
+
+	function linkFunc (scope, element, attributes) {
+		element.on("DOMSubtreeModified", onValChange)
+
+		function onValChange () {
+			var eleVal = deComma(element.text())
+			print(eleVal)
+			var color  = (eleVal > 0) ? "green"
+									  : (eleVal < 0) ? "red"
+									  				 : ""
+			element.attr("class", "ng-binding " + color)
+		}
+	}
+}
+
 //requesting data after loading the angular stuff
 chrome.extension.sendRequest({action: "getData", interval: 60})
 
@@ -101,7 +151,7 @@ chrome.extension.onRequest.addListener(function (request) {
 })
 
 function print() { console.log.apply(console, arguments) }
-function deComma(text) { return (text ? text.replace(/,/g, "") : "") }
+function deComma(text) { return (text ? (text+"").replace(/,/g, "") : "") }
 
 function getValues(obj) {
 	var val = Object.keys(obj).map(function (key) { return obj[key] })

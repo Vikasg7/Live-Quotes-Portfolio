@@ -1,0 +1,4 @@
+{
+	"libs": ["browser", "ecma6", "jQuery"],
+	"loadEagerly" : ["./chrome.js"]
+}
