@@ -3,8 +3,10 @@ var bg  = chrome.extension.getBackgroundPage()
 angular.module("liveQuotesPortfolio", [])
 	.controller("bodyCtrl", bodyCtrl)
 	.directive("colorUp", colorUp)
+	.directive("contenteditable", contentEditable)
 
 function bodyCtrl($scope, $window, $filter) {
+	
 	$window.onunload = beforeUnload
 
 	$scope.list 	= bg.stockData
@@ -14,7 +16,11 @@ function bodyCtrl($scope, $window, $filter) {
 	$scope.target 	= localStorage.target 	? JSON.parse(localStorage.target) 	: {}
 	$scope.stoploss = localStorage.stoploss ? JSON.parse(localStorage.stoploss) : {}
 	$scope.shares 	= localStorage.shares 	? JSON.parse(localStorage.shares) 	: {}
-	
+	//watches for updating bg page Variables instantly
+	//using watch with 3rd parameter as true for deep checking of object
+	$scope.$watch("target",function(newVal, oldVal) { bg.target = newVal }, true)
+	$scope.$watch("stoploss", function(newVal, oldVal) { bg.stoploss = newVal }, true)
+
 	$scope.investment 	= investment
 	$scope.value		= value
 	$scope.ROI 			= ROI
@@ -25,7 +31,7 @@ function bodyCtrl($scope, $window, $filter) {
 	$scope.tPercentROI	= tPercentROI
 	
 	$scope.addSymbol 	= addSymbol
-	$scope.delRow 		= delRow	
+	$scope.delRow 		= delRow
 
 	function investment(ele) {
 		var invest = $scope.shares[ele.id] && $scope.cost[ele.id]  ? $scope.cost[ele.id] * $scope.shares[ele.id] : null
@@ -70,7 +76,7 @@ function bodyCtrl($scope, $window, $filter) {
 	function tPercentROI() {
 		var total = 0
 		total = $scope.tROI() * 100 / $scope.tInvestment()
-		return (total ? total : "")
+		return total ? total : null
 	}
 
 	function addSymbol($event) {
@@ -119,24 +125,55 @@ function bodyCtrl($scope, $window, $filter) {
 
 }
 
-function colorUp(){
+function colorUp() {
 	return {
 		restrict: "A",
 		link: linkFunc
 	}
 
 	function linkFunc (scope, element, attributes) {
+		//adding an event handler to see elements' value changes
 		element.on("DOMSubtreeModified", onValChange)
 
 		function onValChange () {
 			var eleVal = deComma(element.text())
-			print(eleVal)
-			var color  = (eleVal > 0) ? "green"
-									  : (eleVal < 0) ? "red"
-									  				 : ""
+			var color  = (eleVal > 0) ? "green": (eleVal < 0) ? "red": ""
 			element.attr("class", "ng-binding " + color)
 		}
 	}
+}
+
+function contentEditable() {
+	return {
+		restrict: "A",
+		require:"ngModel",
+		link: linkFunc
+	}
+
+	function linkFunc(scope, element, attributes, ngModelController) {
+
+		element.on("keypress", function (key) {
+			//for Keypress event for enter key only
+			if (key.keyCode === 13) { key.preventDefault(); element.trigger("blur") }
+		})
+		//triggering update of the ViewModel
+		element.on("change blur", function () { 
+			scope.$apply(updateViewModel)
+		})
+
+		function updateViewModel() {
+			var htmlValue = element.text()
+			ngModelController.$setViewValue(htmlValue)
+		}
+		//triggering update of html
+		ngModelController.$render = updateHtmlValue
+
+		function updateHtmlValue() {
+			var viewModelValue = ngModelController.$viewValue
+			element.text(viewModelValue)
+		}
+
+	}	
 }
 
 //requesting data after loading the angular stuff

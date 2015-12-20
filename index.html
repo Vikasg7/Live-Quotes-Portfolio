@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<script type="text/javascript" src="jquery.js"></script>		
 		<script type="text/javascript" src="angular.js"></script>
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 
 	<body ng-app="liveQuotesPortfolio" ng-controller="bodyCtrl" ng-csp>
+		
 		<input type="text" ng-model="symbol" ng-keypress="addSymbol($event)">
+		
 		<div id="container">
 			<table>
 				
@@ -33,10 +36,10 @@
 						<td>{{ele.l}}</td>
 						<td color-up>{{ele.c}}</td>
 						<td color-up>{{ele.cp}}</td>
-						<td class="input"><input type="text" ng-model="target[ele.id]"></td>
-						<td class="input"><input type="text" ng-model="stoploss[ele.id]"></td>
-						<td class="input"><input type="text" ng-model="shares[ele.id]"></td>
-						<td class="input"><input type="text" ng-model="cost[ele.id]"></td>
+						<td contenteditable ng-model="target[ele.id]"></td>
+						<td contenteditable ng-model="stoploss[ele.id]"></td>
+						<td contenteditable ng-model="shares[ele.id]"></td>
+						<td contenteditable ng-model="cost[ele.id]"></td>
 						<td>{{investment(ele) | number:2}}</td>
 						<td>{{value(ele) | number:2}}</td>
 						<td color-up>{{ROI(ele) | number:2}}</td>
@@ -63,7 +66,7 @@
 
 			</table>
 		</div>
-	<script type="text/javascript" src="jquery.js"></script>
+
 	<script type="text/javascript" src="main.js"></script>
 	</body>
 </html>

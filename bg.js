@@ -41,3 +41,6 @@ function getValues(obj) {
 	var val = Object.keys(obj).map(function (key) { return obj[key] })
 	return val
 }
+
+var target 	 = localStorage.target ? JSON.parse(localStorage.target) : {}
+var stoploss = localStorage.target ? JSON.parse(localStorage) 		 : {}  
