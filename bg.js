@@ -4,20 +4,24 @@ var inputSyms = []
 
 var stockData = [] //for holding stock data from ajax request
 var interval  = 60 //in seconds
-var loop	  = setInterval(fetch, interval * 1000)
+var loop	  = setInterval(doStuff, interval * 1000)
 
 chrome.extension.onRequest.addListener(function (request) {
 	if (request.action === "getData") {
 		interval = request.interval
 		fetch()
 		clearInterval(loop)
-		loop = setInterval(fetch, interval * 1000)
+		loop = setInterval(doStuff, interval * 1000)
 	}
 })
 
+function doStuff() {
+	setTimeout(function () { checkTS("target"); checkTS("stoploss") }, 10)
+	fetch()
+}
+
 function fetch() {
 	if (getValues(symbols).length === 0 && inputSyms.length === 0) { 
-		print("NO symbols")
 		stockData = []
 		chrome.extension.sendRequest({action: "updateView"})
 		return 
@@ -36,11 +40,59 @@ function fetch() {
 }
 
 function print() { console.log.apply(console, arguments) }
+function deComma(text) { return (text ? (text+"").replace(/,/g, "") : "") }
+String.prototype.proper = function () {	return this.charAt(0).toUpperCase() + this.slice(1) }
+function getValues(obj) { var val = Object.keys(obj).map(function (key) { return obj[key] }); return val }
 
-function getValues(obj) {
-	var val = Object.keys(obj).map(function (key) { return obj[key] })
-	return val
+//target, stoploss and notification starts here
+var target 	 = localStorage.target ? JSON.parse(localStorage.target) 	: {}
+var stoploss = localStorage.target ? JSON.parse(localStorage.stoploss) 	: {}
+
+var tAudio   = new Audio("icons/target.mp3")
+var sAudio   = new Audio("icons/stoploss.mp3")
+
+function checkTS(ToS) {
+	var cv, trORsl, findIn, regex, test, bodyStr, sym, ids = []
+	findIn = JSON.stringify(stockData)
+	ids = Object.keys(window[ToS])
+
+	ids.forEach(function (id, i) {
+		
+		trORsl 	= window[ToS][id] 
+		if (!trORsl) { return }
+		regex 	= new RegExp('"' + id + '"[\\s\\S]+?"l":"(.*?)"', "i")
+		cv 		= deComma(findIn.match(regex)[1])
+
+		switch (ToS) {
+			case "target"	: test = (cv >= trORsl); break;
+			case "stoploss" : test = (cv <= trORsl)
+		}
+
+		if (!test) { return }
+		// Show notifcation
+		sym 	= findIn.match(regex.source.replace("l", "t"))[1]
+		bodyStr = ToS.proper() + " of " + trORsl + " achieved for " + sym + " with " + cv + " on around " + new Date().toLocaleTimeString()
+		notify(bodyStr, onShow)
+		delete window[ToS][id]
+
+	})
+
+	function onShow() {
+		if (ToS === "target") { tAudio.play() } else { sAudio.play() }
+		localStorage[ToS] = JSON.stringify(window[ToS])
+		chrome.extension.sendRequest({action: "updateTS"})
+	}
 }
 
-var target 	 = localStorage.target ? JSON.parse(localStorage.target) : {}
-var stoploss = localStorage.target ? JSON.parse(localStorage) 		 : {}  
+function notify(bodyStr, callback) {
+	var opt, title, notification, trORsl
+	trORsl = bodyStr.split(" ")[0]
+	opt    = {
+		icon:"icons/" + trORsl + ".png",
+		body: bodyStr,
+		sound:"icons/target.mp3"
+	}
+	title  = trORsl.toUpperCase() + " hit!!"
+	notification = new Notification(title, opt)
+	notification.onshow = callback
+}

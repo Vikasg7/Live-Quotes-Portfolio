@@ -10,7 +10,7 @@ table {
 	border-collapse: collapse;
 }
 
-tbody td {
+tbody td, tfoot td {
 	border: 1px solid #E3E3E3;
 	text-align: right;
 	padding-right: 2px;
@@ -28,15 +28,6 @@ thead th {
 	background-color: #5B86B1;
 	padding-right: 2px;
 	padding-left: 2px;
-}
-
-tbody input {
-	width: inherit;
-	background-color: inherit;
-	border: none;
-	font-size: inherit;
-	text-align: inherit;
-	padding-right: inherit;
 }
 
 tbody tr:nth-child(odd){
@@ -71,14 +62,9 @@ tbody td.close:hover {
 }
 
 tfoot tr {
+	font-weight: bold;
 	border-bottom-color: lightgrey;
 	border-bottom-style: double;
-}
-
-tfoot tr td {
-	border-top-color: lightgrey;
-	border-top-style: double;
-	font-weight: bold;
 }
 
 thead span {

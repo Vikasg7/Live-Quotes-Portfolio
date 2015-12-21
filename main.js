@@ -170,6 +170,9 @@ function contentEditable() {
 
 		function updateHtmlValue() {
 			var viewModelValue = ngModelController.$viewValue
+			// As undefined value won't update the html (leaving it with the current value),
+			// so I am using empty string instead.
+			viewModelValue = viewModelValue ? viewModelValue : ""
 			element.text(viewModelValue)
 		}
 
@@ -177,20 +180,25 @@ function contentEditable() {
 }
 
 //requesting data after loading the angular stuff
-chrome.extension.sendRequest({action: "getData", interval: 60})
+chrome.extension.sendRequest({action: "getData", interval: 5})
 
 chrome.extension.onRequest.addListener(function (request) {
+	var scope = angular.element($('[ng-app]')).scope()	//thats how we can refer App Scope outside the App Scope or Controller
+	
 	if (request.action === "updateView") {
-		var scope = angular.element($('[ng-app]')).scope()	//thats how we can refer App Scope outside the App Scope or Controller
+		
 		scope.$apply(function () { scope.list = bg.stockData })
 		scope.list.forEach(function (el, i) { bg.symbols[el.id] = el.e + ":" + el.t })
+
+	} else if (request.action === "updateTS") {
+		
+		scope.$apply(function () {
+			scope.target   = bg.target
+			scope.stoploss = bg.stoploss
+		})
+
 	}
 })
 
 function print() { console.log.apply(console, arguments) }
 function deComma(text) { return (text ? (text+"").replace(/,/g, "") : "") }
-
-function getValues(obj) {
-	var val = Object.keys(obj).map(function (key) { return obj[key] })
-	return val
-}
