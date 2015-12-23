@@ -16,15 +16,25 @@ function bodyCtrl($scope, $window, $filter) {
 	$scope.target 	= localStorage.target 	? JSON.parse(localStorage.target) 	: {}
 	$scope.stoploss = localStorage.stoploss ? JSON.parse(localStorage.stoploss) : {}
 	$scope.shares 	= localStorage.shares 	? JSON.parse(localStorage.shares) 	: {}
+
+	$scope.from 	= localStorage.from 	? parseInt(localStorage.from) 		: 0
+	$scope.to 		= localStorage.to 		? parseInt(localStorage.to) 		: 24
+	$scope.interval = localStorage.interval ? parseInt(localStorage.interval)	: 5
+
+	$scope.$watch("from", function(newVal, oldVal) { localStorage.from = newVal })
+	$scope.$watch("to", function(newVal, oldVal) { localStorage.to = newVal })
+	$scope.$watch("interval", function(newVal, oldVal) { localStorage.interval = newVal ? newVal : 5 })
+
 	//watches for updating bg page Variables instantly
 	//using watch with 3rd parameter as true for deep checking of object
-	$scope.$watch("target",function(newVal, oldVal) { bg.target = newVal }, true)
+	$scope.$watch("target", function(newVal, oldVal) { bg.target = newVal }, true)
 	$scope.$watch("stoploss", function(newVal, oldVal) { bg.stoploss = newVal }, true)
-
+	//individuals
 	$scope.investment 	= investment
 	$scope.value		= value
 	$scope.ROI 			= ROI
 	$scope.percentROI 	= percentROI
+	//totals
 	$scope.tInvestment 	= tInvestment
 	$scope.tValue		= tValue
 	$scope.tROI			= tROI
@@ -154,7 +164,7 @@ function contentEditable() {
 
 		element.on("keypress", function (key) {
 			//for Keypress event for enter key only
-			if (key.keyCode === 13) { key.preventDefault(); element.trigger("blur") }
+			if (key.keyCode === 13) { key.preventDefault(); element[0].blur() }
 		})
 		//triggering update of the ViewModel
 		element.on("change blur", function () { 
@@ -180,7 +190,7 @@ function contentEditable() {
 }
 
 //requesting data after loading the angular stuff
-chrome.extension.sendRequest({action: "getData", interval: 5})
+chrome.extension.sendRequest({action: "getData", interval: parseInt(localStorage.interval)})
 
 chrome.extension.onRequest.addListener(function (request) {
 	var scope = angular.element($('[ng-app]')).scope()	//thats how we can refer App Scope outside the App Scope or Controller
@@ -202,3 +212,32 @@ chrome.extension.onRequest.addListener(function (request) {
 
 function print() { console.log.apply(console, arguments) }
 function deComma(text) { return (text ? (text+"").replace(/,/g, "") : "") }
+
+//something are done without angular and with normal jQuery and Javascript
+$("#input a:eq(0)").click(addToggle)
+$("#input a:eq(1)").click(optionsToggle)
+
+function addToggle() {
+	if ($(this).text() === "Add!") {
+		$("#symbols").removeAttr("style")
+		$("#buttons a:eq(1)").css("display","none")		//hiding options button
+		$(this).text("Hide!")
+	} else if ($(this).text() === "Hide!") {
+		$("#symbols").css("display", "none")
+		$("#buttons a:eq(1)").removeAttr("style")		//displaying options button
+		$(this).text("Add!")
+	}
+}
+
+function optionsToggle() {
+	if ($(this).text() === "Options") {
+		$("#boxes div").removeAttr("style")
+		$("#buttons a:eq(0)").css("display","none")		//hiding add button
+		$(this).text("Hide!")
+	} else if ($(this).text() === "Hide!") {
+		$("#boxes div").css("display", "none")
+		$("#buttons a:eq(0)").removeAttr("style")		//displaying add button
+		$(this).text("Options")
+		chrome.extension.sendMessage({action: "getData", interval: parseInt(localStorage.interval)})
+	}
+}

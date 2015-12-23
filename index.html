@@ -7,63 +7,93 @@
 	</head>
 
 	<body ng-app="liveQuotesPortfolio" ng-controller="bodyCtrl" ng-csp>
-		
-		<input type="text" ng-model="symbol" ng-keypress="addSymbol($event)">
-		
-		<div id="container">
-			<table>
+		<div id="main">
+			<span>Live Quotes Portfolio</span>
+			<div id="input">
 				
-				<thead>
-					<tr>
-						<th>Symbol</th>
-						<th>Price</th>
-						<th>Change</th>
-						<th>%Change</th>
-						<th>Target</th>
-						<th>Stoploss</th>						
-						<th>Shares</th>
-						<th>Cost</th>
-						<th>Investment</th>
-						<th>Value</th>
-						<th>ROI</th>
-						<th>%ROI</th>
-					</tr>
-				</thead>
+				<div id="boxes">
+					<!-- Symbol input box -->
+					<input id="symbols" type="text" ng-model="symbol" ng-keypress="addSymbol($event)" style="display:none;">
+					<!-- Time input Box -->
+					<div style="display:none">
+						Market opens
+						<input id="from" type="Number" min="0" max="12" maxlength="2" ng-model="from">
+						to
+						<input id="to" type="Number" min="13" max="24" maxlength="2" ng-model="to">
+						(24-hours)
+					</div>
+					<!-- Interval Input Box -->
+					<div style="display:none">
+						Update every
+						<input id="interval" type="Number" min="5" maxlength="4" ng-model="interval">
+						secs
+					</div>				
+				</div>
+
+				<div id="buttons">
+					<a href="#">Add!</a>
+					<a href="#">Options</a>
+				</div>
+			
+			</div>
+		
+
+			<div id="container">
+				<table>
 					
-				<tbody>
-					<tr ng-repeat="ele in list track by (ele.id)">
-						<td>{{ele.t | uppercase}}</td>
-						<td>{{ele.l}}</td>
-						<td color-up>{{ele.c}}</td>
-						<td color-up>{{ele.cp}}</td>
-						<td contenteditable ng-model="target[ele.id]"></td>
-						<td contenteditable ng-model="stoploss[ele.id]"></td>
-						<td contenteditable ng-model="shares[ele.id]"></td>
-						<td contenteditable ng-model="cost[ele.id]"></td>
-						<td>{{investment(ele) | number:2}}</td>
-						<td>{{value(ele) | number:2}}</td>
-						<td color-up>{{ROI(ele) | number:2}}</td>
-						<td color-up>{{percentROI(ele) | number:2}}</td>
-						<td class="close" ng-click="delRow(ele)">&nbsp;-&nbsp;</td>
-					</tr>
-				</tbody>
+					<thead>
+						<tr>
+							<th>Symbol</th>
+							<th>Price</th>
+							<th>Change</th>
+							<th>%Change</th>
+							<th>Target</th>
+							<th>Stoploss</th>						
+							<th>Shares</th>
+							<th>Cost</th>
+							<th>Investment</th>
+							<th>Value</th>
+							<th>ROI</th>
+							<th>%ROI</th>
+						</tr>
+					</thead>
+						
+					<tbody>
+						<tr ng-repeat="ele in list track by (ele.id)">
+							<td>{{ele.t | uppercase}}</td>
+							<td>{{ele.l}}</td>
+							<td color-up>{{ele.c}}</td>
+							<td color-up>{{ele.cp}}</td>
+							<td contenteditable ng-model="target[ele.id]"></td>
+							<td contenteditable ng-model="stoploss[ele.id]"></td>
+							<td contenteditable ng-model="shares[ele.id]"></td>
+							<td contenteditable ng-model="cost[ele.id]"></td>
+							<td>{{investment(ele) | number:2}}</td>
+							<td>{{value(ele) | number:2}}</td>
+							<td color-up>{{ROI(ele) | number:2}}</td>
+							<td color-up>{{percentROI(ele) | number:2}}</td>
+							<td class="close" ng-click="delRow(ele)">&nbsp;-&nbsp;</td>
+						</tr>
+					</tbody>
 
-				<tfoot>
-					<td>Total</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td>{{tInvestment() | number:2}}</td>
-					<td>{{tValue() | number:2}}</td>
-					<td color-up>{{tROI() | number:2}}</td>
-					<td color-up>{{tPercentROI() | number:2}}</td>
-				</tfoot>
+					<tfoot>
+						<td>Total</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td>{{tInvestment() | number:2}}</td>
+						<td>{{tValue() | number:2}}</td>
+						<td color-up>{{tROI() | number:2}}</td>
+						<td color-up>{{tPercentROI() | number:2}}</td>
+					</tfoot>
 
-			</table>
+				</table>
+			</div>
+
 		</div>
 
 	<script type="text/javascript" src="main.js"></script>

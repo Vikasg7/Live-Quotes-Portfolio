@@ -5,6 +5,12 @@ body {
 	font-size: 12px;
 }
 
+div#main>span {
+	margin: 5px;
+	vertical-align: -webkit-baseline-middle;
+	font-size: 14px;
+}
+
 table {
 	margin: 0;
 	border-collapse: collapse;
@@ -24,10 +30,11 @@ tbody td, tfoot td {
 
 thead th {
 	border: 1px solid #E3E3E3;
-	color: white;
-	background-color: #5B86B1;
+	color: black;
+	font-weight: bold;
 	padding-right: 2px;
 	padding-left: 2px;
+	min-width: 40px;
 }
 
 tbody tr:nth-child(odd){
@@ -78,4 +85,52 @@ thead span {
 
 .green {
 	color: green;
+}
+
+/*input box starts here*/
+
+#input {
+	float: right;
+	margin: 2px 14px 4px 0;
+	height: 19px;
+}
+#input #boxes {
+	height: 13px;
+	float: left;
+	margin: 0 4px 0 0;
+	font-size: 11px;
+}
+
+#boxes div {
+	margin: 0;
+	display: inline;
+}
+
+#boxes div:nth-child(2) {
+	padding-right: 8px;
+	border-right: 1px solid lightgrey; 
+}
+
+#boxes div:nth-child(3) {
+	padding-left: 8px;
+	border-left: 1px solid lightgrey; 
+}
+
+#from, #to {
+	height: 13px;
+	width: 32px;
+} 
+
+#interval {
+	height: 13px;
+	width: 50px;
+}
+
+#input #buttons {
+	float: right;
+	margin: 4px;
+}
+
+#buttons a:nth-child(1) {
+	margin-right: 4px;
 }

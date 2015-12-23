@@ -1,5 +1,5 @@
-var symbols //hold symbols to be scraped
-	symbols   = localStorage.symbols ? JSON.parse(localStorage.symbols) : {}
+ //hold symbols to be scraped
+var	symbols   = localStorage.symbols ? JSON.parse(localStorage.symbols) : {}
 var inputSyms = []
 
 var stockData = [] //for holding stock data from ajax request
@@ -16,8 +16,11 @@ chrome.extension.onRequest.addListener(function (request) {
 })
 
 function doStuff() {
-	setTimeout(function () { checkTS("target"); checkTS("stoploss") }, 10)
-	fetch()
+	print(!(stopUpdate()))
+	if (!stopUpdate()) {
+		setTimeout(function () { checkTS("target"); checkTS("stoploss") }, 10)
+		fetch()
+	}
 }
 
 function fetch() {
@@ -64,7 +67,7 @@ function checkTS(ToS) {
 		cv 		= deComma(findIn.match(regex)[1])
 
 		switch (ToS) {
-			case "target"	: test = (cv >= trORsl); break;
+			case "target"	: test = (cv >= trORsl); break
 			case "stoploss" : test = (cv <= trORsl)
 		}
 
@@ -95,4 +98,16 @@ function notify(bodyStr, callback) {
 	title  = trORsl.toUpperCase() + " hit!!"
 	notification = new Notification(title, opt)
 	notification.onshow = callback
+}
+
+function stopUpdate() {
+	var from = localStorage.from ? localStorage.from : 0
+	var to 	 = localStorage.to   ? localStorage.to 	: 0
+	var now  = new Date().toLocaleTimeString("en-US",{hour12:false})
+		now  = now.length === 10 ? "0" + now : now
+
+	from = from.length == 1 ? "0" + from : from
+	from = from + ":00:00"
+	to 	 = to + ":00:00"
+	return !(now >= from && now <= to)	// returning false as don't stop update
 }
