@@ -1,12 +1,12 @@
 body {
 	padding: 0;
-	margin: 0;
+	margin: 0 0 2px 2px;
 	font-family: Arial;
 	font-size: 12px;
 }
 
 div#main>span {
-	margin: 5px;
+	margin: 0;
 	vertical-align: -webkit-baseline-middle;
 	font-size: 14px;
 }
@@ -35,6 +35,7 @@ thead th {
 	padding-right: 2px;
 	padding-left: 2px;
 	min-width: 40px;
+	cursor: pointer;
 }
 
 tbody tr:nth-child(odd){
@@ -70,7 +71,7 @@ tbody td.close:hover {
 
 tfoot tr {
 	font-weight: bold;
-	border-bottom-color: lightgrey;
+	border-bottom-color: #E3E3E3;
 	border-bottom-style: double;
 }
 
@@ -133,4 +134,12 @@ thead span {
 
 #buttons a:nth-child(1) {
 	margin-right: 4px;
+}
+
+/*sort stuff*/
+.sortorder:after {
+  content: '\25b2';
+}
+.sortorder.reverse:after {
+  content: '\25bc';
 }

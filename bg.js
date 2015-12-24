@@ -16,7 +16,6 @@ chrome.extension.onRequest.addListener(function (request) {
 })
 
 function doStuff() {
-	print(!(stopUpdate()))
 	if (!stopUpdate()) {
 		setTimeout(function () { checkTS("target"); checkTS("stoploss") }, 10)
 		fetch()

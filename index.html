@@ -9,6 +9,7 @@
 	<body ng-app="liveQuotesPortfolio" ng-controller="bodyCtrl" ng-csp>
 		<div id="main">
 			<span>Live Quotes Portfolio</span>
+			
 			<div id="input">
 				
 				<div id="boxes">
@@ -19,7 +20,7 @@
 						Market opens
 						<input id="from" type="Number" min="0" max="12" maxlength="2" ng-model="from">
 						to
-						<input id="to" type="Number" min="13" max="24" maxlength="2" ng-model="to">
+						<input id="to" type="Number" min="1" max="24" maxlength="2" ng-model="to">
 						(24-hours)
 					</div>
 					<!-- Interval Input Box -->
@@ -27,40 +28,64 @@
 						Update every
 						<input id="interval" type="Number" min="5" maxlength="4" ng-model="interval">
 						secs
-					</div>				
+					</div>
+
 				</div>
 
 				<div id="buttons">
 					<a href="#">Add!</a>
 					<a href="#">Options</a>
 				</div>
-			
 			</div>
 		
-
 			<div id="container">
-				<table>
+				<table class="sortable">
 					
 					<thead>
 						<tr>
-							<th>Symbol</th>
-							<th>Price</th>
-							<th>Change</th>
-							<th>%Change</th>
-							<th>Target</th>
-							<th>Stoploss</th>						
-							<th>Shares</th>
-							<th>Cost</th>
-							<th>Investment</th>
-							<th>Value</th>
-							<th>ROI</th>
-							<th>%ROI</th>
+							<th ng-click="toggleSort('t')">
+								Symbol<span class="sortorder" ng-show="sortKey === 't'" ng-class={reverse:reverse}></span>
+							</th>
+							<th ng-click="toggleSort('l')">
+								Price<span class="sortorder" ng-show="sortKey === 'l'" ng-class={reverse:reverse}></span>
+							</th>
+							<th ng-click="toggleSort('c')">
+								Change<span class="sortorder" ng-show="sortKey === 'c'" ng-class={reverse:reverse}></span>
+							</th>
+							<th ng-click="toggleSort('cp')">
+								%Change<span class="sortorder" ng-show="sortKey === 'cp'" ng-class={reverse:reverse}></span>
+							</th>
+							<th ng-click="toggleSort('target')">
+								Target<span class="sortorder" ng-show="sortKey === 'target'" ng-class={reverse:reverse}></span>
+							</th>
+							<th ng-click="toggleSort('stoploss')">
+								Stoploss<span class="sortorder" ng-show="sortKey === 'stoploss'" ng-class={reverse:reverse}></span>
+							</th>
+							<th ng-click="toggleSort('shares')">
+								Shares<span class="sortorder" ng-show="sortKey === 'shares'" ng-class={reverse:reverse}></span>
+							</th>
+							<th ng-click="toggleSort('cost')">
+								Cost<span class="sortorder" ng-show="sortKey === 'cost'" ng-class={reverse:reverse}></span>
+							</th>
+							<th ng-click="toggleSort('investment')">
+								Investment<span class="sortorder" ng-show="sortKey === 'investment'" ng-class={reverse:reverse}></span>
+							</th>
+							<th ng-click="toggleSort('value')">
+								Value<span class="sortorder" ng-show="sortKey === 'value'" ng-class={reverse:reverse}></span>
+							</th>
+							<th ng-click="toggleSort('ROI')">
+								ROI<span class="sortorder" ng-show="sortKey === 'ROI'" ng-class={reverse:reverse}></span>
+							</th>
+							<th ng-click="toggleSort('pROI')">
+								%ROI<span class="sortorder" ng-show="sortKey === 'pROI'" ng-class={reverse:reverse}></span>
+							</th>
 						</tr>
 					</thead>
 						
 					<tbody>
-						<tr ng-repeat="ele in list track by (ele.id)">
+						<tr ng-repeat="ele in list | sortBy:sortKey:reverse:this track by ele.id">
 							<td>{{ele.t | uppercase}}</td>
+							<td class="ids" style="display:none;">{{ele.id}}</td>
 							<td>{{ele.l}}</td>
 							<td color-up>{{ele.c}}</td>
 							<td color-up>{{ele.cp}}</td>
@@ -68,10 +93,10 @@
 							<td contenteditable ng-model="stoploss[ele.id]"></td>
 							<td contenteditable ng-model="shares[ele.id]"></td>
 							<td contenteditable ng-model="cost[ele.id]"></td>
-							<td>{{investment(ele) | number:2}}</td>
-							<td>{{value(ele) | number:2}}</td>
-							<td color-up>{{ROI(ele) | number:2}}</td>
-							<td color-up>{{percentROI(ele) | number:2}}</td>
+							<td name="investment">{{investment(ele) | number:2}}</td>
+							<td name="value">{{value(ele) | number:2}}</td>
+							<td name="ROI" color-up>{{ROI(ele) | number:2}}</td>
+							<td name="pROI" color-up>{{percentROI(ele) | number:2}}</td>
 							<td class="close" ng-click="delRow(ele)">&nbsp;-&nbsp;</td>
 						</tr>
 					</tbody>

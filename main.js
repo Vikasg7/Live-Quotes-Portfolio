@@ -1,6 +1,7 @@
 var bg  = chrome.extension.getBackgroundPage() 
 //initialising app and attaching stuff
 angular.module("liveQuotesPortfolio", [])
+	.filter("sortBy", sortBy)
 	.controller("bodyCtrl", bodyCtrl)
 	.directive("colorUp", colorUp)
 	.directive("contenteditable", contentEditable)
@@ -42,6 +43,17 @@ function bodyCtrl($scope, $window, $filter) {
 	
 	$scope.addSymbol 	= addSymbol
 	$scope.delRow 		= delRow
+
+	//initial Sort by symbol at application start
+	$scope.sortKey 		= localStorage.sortKey ? localStorage.sortKey : "t"
+	$scope.reverse  	= localStorage.reverse ? localStorage.reverse: false
+
+	$scope.toggleSort	= toggleSort
+
+	function toggleSort(sortKey) {
+		$scope.reverse = ($scope.sortKey === sortKey) ? !$scope.reverse : false
+		$scope.sortKey = sortKey
+	}
 
 	function investment(ele) {
 		var invest = $scope.shares[ele.id] && $scope.cost[ele.id]  ? $scope.cost[ele.id] * $scope.shares[ele.id] : null
@@ -131,8 +143,39 @@ function bodyCtrl($scope, $window, $filter) {
 		localStorage.shares 	= JSON.stringify($scope.shares)
 		localStorage.stoploss 	= JSON.stringify($scope.stoploss)
 		localStorage.target 	= JSON.stringify($scope.target)
+		//saving the sortDetails
+		localStorage.sortKey = $scope.sortKey
+		localStorage.reverse = JSON.stringify($scope.reverse)
 	}
+}
 
+function sortBy() {
+	return sortFunc
+	// arr would be the $scope.list 
+	function sortFunc (arr, sortKey, reverse, scope) {
+		// Making a copy of the Original Array to avoid an Infinite loop ($digest() has been
+		// triggered 10 times.Aborting! Error). Because Otherwise the sort function will alter
+		// the Orignial Object ($scope.list = arr) (and then returns its sorted copy) which would cause  
+		// the trigger of $watches and $digest infinitely.
+		var arrCopy = arr.slice(0)
+			// for symbol
+		if (sortKey === "t") { 
+			var sorted = arrCopy.sort(function (a,b) { return a[sortKey] > b[sortKey] })
+		}	// for price, change and change percentage
+		else if ("lccp".search(sortKey) > -1) { 
+			var sorted = arrCopy.sort(function (a,b) { return a[sortKey] - b[sortKey] })
+		} 	// for target, stoploss, cost & shares
+		else if ("targetstoplosscostshares".search(sortKey) > -1) { //
+			var sorted = arrCopy.sort(function (a,b) { return scope[sortKey][a.id] - scope[sortKey][b.id] })
+		}	// for price, change and change percentage
+		else if ("investmentvalueROIpROI".search(sortKey > -1)) {
+			var symMap = {}
+			var ids    = $("td.ids")
+			$("td[name='" + sortKey + "']").each(function (i, ele) { symMap[ids[i].innerText] = ele.innerText })
+			var sorted = arrCopy.sort(function (a,b) { return symMap[a.id] - symMap[b.id] })
+		}
+		return reverse ? sorted.reverse() : sorted
+	}
 }
 
 function colorUp() {
@@ -147,8 +190,8 @@ function colorUp() {
 
 		function onValChange () {
 			var eleVal = deComma(element.text())
-			var color  = (eleVal > 0) ? "green": (eleVal < 0) ? "red": ""
-			element.attr("class", "ng-binding " + color)
+			var color  = (eleVal > 0) ? " green": (eleVal < 0) ? " red": ""
+			element.attr("class", "ng-binding" + color)
 		}
 	}
 }
