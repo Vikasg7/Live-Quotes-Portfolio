@@ -5,10 +5,15 @@ body {
 	font-size: 12px;
 }
 
-div#main>span {
+div#main a span {
 	margin: 0;
 	vertical-align: -webkit-baseline-middle;
 	font-size: 14px;
+}
+
+#main>a{
+	text-decoration: none;
+	color: black;
 }
 
 table {

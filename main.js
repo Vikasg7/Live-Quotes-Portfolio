@@ -2,12 +2,11 @@ var bg  = chrome.extension.getBackgroundPage()
 //initialising app and attaching stuff
 angular.module("liveQuotesPortfolio", [])
 	.filter("sortBy", sortBy)
-	.controller("bodyCtrl", bodyCtrl)
+	.controller("bodyCtrl",["$scope", "$window", bodyCtrl])
 	.directive("colorUp", colorUp)
 	.directive("contenteditable", contentEditable)
 
-function bodyCtrl($scope, $window, $filter) {
-	
+function bodyCtrl($scope, $window) {
 	$window.onunload = beforeUnload
 
 	$scope.list 	= bg.stockData
@@ -20,7 +19,7 @@ function bodyCtrl($scope, $window, $filter) {
 
 	$scope.from 	= localStorage.from 	? parseInt(localStorage.from) 		: 0
 	$scope.to 		= localStorage.to 		? parseInt(localStorage.to) 		: 24
-	$scope.interval = localStorage.interval ? parseInt(localStorage.interval)	: 5
+	$scope.interval = localStorage.interval ? parseInt(localStorage.interval)	: 10
 
 	$scope.$watch("from", function(newVal, oldVal) { localStorage.from = newVal })
 	$scope.$watch("to", function(newVal, oldVal) { localStorage.to = newVal })
@@ -46,7 +45,7 @@ function bodyCtrl($scope, $window, $filter) {
 
 	//initial Sort by symbol at application start
 	$scope.sortKey 		= localStorage.sortKey ? localStorage.sortKey : "t"
-	$scope.reverse  	= localStorage.reverse ? localStorage.reverse: false
+	$scope.reverse  	= localStorage.reverse === "true" ? true : false
 
 	$scope.toggleSort	= toggleSort
 
@@ -174,6 +173,7 @@ function sortBy() {
 			$("td[name='" + sortKey + "']").each(function (i, ele) { symMap[ids[i].innerText] = ele.innerText })
 			var sorted = arrCopy.sort(function (a,b) { return symMap[a.id] - symMap[b.id] })
 		}
+		print(reverse)
 		return reverse ? sorted.reverse() : sorted
 	}
 }
