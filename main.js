@@ -156,6 +156,7 @@ function sortBy() {
 		// triggered 10 times.Aborting! Error). Because Otherwise the sort function will alter
 		// the Orignial Object ($scope.list = arr) (and then returns its sorted copy) which would cause  
 		// the trigger of $watches and $digest infinitely.
+		var min 	= Number.MIN_SAFE_INTEGER
 		var arrCopy = arr.slice(0)
 			// for symbol
 		if (sortKey === "t") { 
@@ -165,15 +166,14 @@ function sortBy() {
 			var sorted = arrCopy.sort(function (a,b) { return a[sortKey] - b[sortKey] })
 		} 	// for target, stoploss, cost & shares
 		else if ("targetstoplosscostshares".search(sortKey) > -1) { //
-			var sorted = arrCopy.sort(function (a,b) { return scope[sortKey][a.id] - scope[sortKey][b.id] })
+			var sorted = arrCopy.sort(function (a,b) { return (scope[sortKey][a.id] || min) - (scope[sortKey][b.id] || min) })
 		}	// for price, change and change percentage
 		else if ("investmentvalueROIpROI".search(sortKey > -1)) {
 			var symMap = {}
 			var ids    = $("td.ids")
 			$("td[name='" + sortKey + "']").each(function (i, ele) { symMap[ids[i].innerText] = ele.innerText })
-			var sorted = arrCopy.sort(function (a,b) { return symMap[a.id] - symMap[b.id] })
+			var sorted = arrCopy.sort(function (a,b) { return (symMap[a.id] || min) - (symMap[b.id] || min) })
 		}
-		print(reverse)
 		return reverse ? sorted.reverse() : sorted
 	}
 }

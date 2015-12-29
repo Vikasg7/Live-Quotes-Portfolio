@@ -90,9 +90,8 @@ function notify(bodyStr, callback) {
 	var opt, title, notification, trORsl
 	trORsl = bodyStr.split(" ")[0]
 	opt    = {
-		icon:"icons/" + trORsl + ".png",
-		body: bodyStr,
-		sound:"icons/target.mp3"
+		icon:"icons/" + trORsl.toLowerCase() + ".png",
+		body: bodyStr
 	}
 	title  = trORsl.toUpperCase() + " hit!!"
 	notification = new Notification(title, opt)

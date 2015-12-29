@@ -97,7 +97,7 @@ thead span {
 
 #input {
 	float: right;
-	margin: 2px 14px 4px 0;
+	margin: 2px 8px 4px 0;
 	height: 19px;
 }
 #input #boxes {
@@ -137,8 +137,9 @@ thead span {
 	margin: 4px;
 }
 
-#buttons a:nth-child(1) {
-	margin-right: 4px;
+#buttons a {
+	padding-left: 2px;
+	color: blue;
 }
 
 /*sort stuff*/
@@ -148,3 +149,8 @@ thead span {
 .sortorder.reverse:after {
   content: '\25bc';
 }
+
+td[contenteditable]:hover, 
+td[contenteditable]:focus {
+	background-color: lightgrey;
+} 
