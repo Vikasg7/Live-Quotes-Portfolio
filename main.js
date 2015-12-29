@@ -163,7 +163,7 @@ function sortBy() {
 			var sorted = arrCopy.sort(function (a,b) { return a[sortKey] > b[sortKey] })
 		}	// for price, change and change percentage
 		else if ("lccp".search(sortKey) > -1) { 
-			var sorted = arrCopy.sort(function (a,b) { return a[sortKey] - b[sortKey] })
+			var sorted = arrCopy.sort(function (a,b) { return deComma(a[sortKey]) - deComma(b[sortKey]) })
 		} 	// for target, stoploss, cost & shares
 		else if ("targetstoplosscostshares".search(sortKey) > -1) { //
 			var sorted = arrCopy.sort(function (a,b) { return (scope[sortKey][a.id] || min) - (scope[sortKey][b.id] || min) })
@@ -172,7 +172,7 @@ function sortBy() {
 			var symMap = {}
 			var ids    = $("td.ids")
 			$("td[name='" + sortKey + "']").each(function (i, ele) { symMap[ids[i].innerText] = ele.innerText })
-			var sorted = arrCopy.sort(function (a,b) { return (symMap[a.id] || min) - (symMap[b.id] || min) })
+			var sorted = arrCopy.sort(function (a,b) { return (deComma(symMap[a.id]) || min) - (deComma(symMap[b.id]) || min) })
 		}
 		return reverse ? sorted.reverse() : sorted
 	}
