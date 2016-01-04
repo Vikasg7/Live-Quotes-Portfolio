@@ -28,6 +28,15 @@
 	http://mytrikks.blogspot.in/2015/12/live-quotes-portfolio-chrome-extension.html
 </a>
 
+<h4>Download</h4>
 <a href="https://chrome.google.com/webstore/detail/live-quotes-portfolio/gdhegkcppceeagocbpfchphhojclpmif?hl=en-US">
 	Download the extension from the webstore
 </a>
+
+<h4>Issues & Suggestions</h4>
+<p>If you find an issues using the Library OR if you have any suggestions to make it perform better, then you can write to us in the Issues Section.</p>
+
+<h4>Donate</h4>
+<p>If this repository helps you anyhow and you can want to contribute, then you can 
+	<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F3QQCWFPWHBYE" target="_blank">Buy Me Coffee</a>
+</p>
