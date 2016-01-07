@@ -37,6 +37,6 @@
 <p>If you find an issues using the Library OR if you have any suggestions to make it perform better, then you can write to us in the Issues Section.</p>
 
 <h4>Donate</h4>
-<p>If this repository helps you anyhow and you can want to contribute, then you can 
+<p>If this repository helps you anyhow, please don't mind coming back and 
 	<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F3QQCWFPWHBYE" target="_blank">Buy Me Coffee</a>
 </p>
