@@ -6,12 +6,12 @@
 </a>
 <br>
 <br>
-<img src="https://drive.google.com/uc?id=0BztaImknhgDFeXNQa1NnNWktQ1E">
+<img src="http://3.bp.blogspot.com/-pygpuSKiyJI/VpKrbKrjutI/AAAAAAAAAu0/Nt8ipW24eVQ/s640/blog.png">
 
 <h4>Intro</h4>
 <p>Live Quotes Portfolio is a FREE Chrome Extension which keeps track of your stocks portfolio and also shows live stock quotes.It has following features :- </p>
 <ol>
-	<li>Target & Stoploss Notifications with Sound.</li>
+	<li>Target & Stoploss Notifications with Sound AND Red(Stoploss) and Green(Target) colors on the UI.</li>
 	<li>Sortable columns</li>
 	<li>Saves user Preferences</li>
 	<li>Shows Current Price, Daily Change, Investment(Cost * No. of Shares), Value(Current Price * No. of Shares), ROI (Value - Investment), %ROI (ROI / Investment)</li>
@@ -39,4 +39,7 @@
 <h4>Donate</h4>
 <p>If this repository helps you anyhow, please don't mind coming back and 
 	<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F3QQCWFPWHBYE" target="_blank">Buy Me Coffee</a>
+OR you can use 
+	<a href="https://gratipay.com/~xcelancer/" target="_blank">Gratipay</a>
+to show your appreciation and gratitude.
 </p>
