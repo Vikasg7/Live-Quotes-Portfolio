@@ -158,11 +158,11 @@ td[contenteditable]:focus {
 }
 
 .sRed {
-	background-color: rgba(255, 0, 0, 0.78);
+	background-color: rgba(255, 0, 0, 0.65);
 	color: white;
 }
 
 .tGreen {
-	background-color: rgba(0, 128, 0, 0.78);
+	background-color: rgba(0, 128, 0, 0.65);
 	color: white;
 }
