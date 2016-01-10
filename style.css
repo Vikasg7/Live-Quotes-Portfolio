@@ -48,7 +48,7 @@ tbody tr:nth-child(odd){
 }
 
 td:first-child , th:first-child {
-	padding-left: 1px;
+	padding-left: 3px;
 	padding-right: 2px;
 	text-align: left;
 }
@@ -146,6 +146,7 @@ thead span {
 .sortorder:after {
   content: '\25b2';
 }
+
 .sortorder.reverse:after {
   content: '\25bc';
 }
@@ -153,4 +154,15 @@ thead span {
 td[contenteditable]:hover, 
 td[contenteditable]:focus {
 	background-color: lightgrey;
-} 
+	color: black;
+}
+
+.sRed {
+	background-color: rgba(255, 0, 0, 0.78);
+	color: white;
+}
+
+.tGreen {
+	background-color: rgba(0, 128, 0, 0.78);
+	color: white;
+}
