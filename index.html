@@ -86,7 +86,7 @@
                </thead>
                   
                <tbody>
-                  <tr ng-repeat="ele in list | sortBy:sortKey:reverse:this track by ele.id">
+                  <tr ng-repeat="ele in list | sortBy:sortKey:reverse:this track by ele.id" ng-attr-title="{{ele.name}}">
                      <td ng-class="redOrGreen(ele)">{{ele.t | uppercase}}</td>
                      <td class="ids" style="display:none;">{{ele.id}}</td>
                      <td>{{ele.l}}</td>

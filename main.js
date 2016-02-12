@@ -191,87 +191,82 @@ function sortBy() {
 }
 
 function colorUp() {
-    return {
-        restrict: "A",
-        link: linkFunc
-    }
+  return {
+      restrict: "A",
+      link: linkFunc
+  }
 
-    function linkFunc (scope, element, attributes) {
-        //adding an event handler to see elements' value changes
-       element.on("DOMSubtreeModified", onValChange)
-       
-       function onValChange () {
-          var eleVal = deComma(element.text())
-          var color  = (eleVal > 0) ? " green": (eleVal < 0) ? " red": ""
-          element.attr("class", "ng-binding" + color)
-       }
+  function linkFunc (scope, element, attributes) {
+    //adding an event handler to see elements' value changes
+    element.on("DOMSubtreeModified", onValChange)
+    
+    function onValChange () {
+      var eleVal = deComma(element.text())
+      var color  = (eleVal > 0) ? " green": (eleVal < 0) ? " red": ""
+      element.attr("class", "ng-binding" + color)
     }
+  }
 }
 
 function contentEditable() {
-    return {
-        restrict: "A",
-        require:"ngModel",
-        link: linkFunc
-    }
+  return {
+      restrict: "A",
+      require:"ngModel",
+      link: linkFunc
+  }
 
-    function linkFunc(scope, element, attributes, ngModelController) {
+  function linkFunc(scope, element, attributes, ngModelController) {
 
-        element.on("keypress", 
-            function (key) {
-               //for Keypress event for enter key only
-               if (key.keyCode === 13) { key.preventDefault(); element[0].blur() }
-            }
-        )
-        //triggering update of the ViewModel
-        element.on("change blur", 
-            function () { 
-               scope.$apply(updateViewModel)
-            }
-        )
-
-        function updateViewModel() {
-            var htmlValue = element.text()
-            ngModelController.$setViewValue(htmlValue)
+      //for Keypress event for enter key only
+      element.on("keypress", function (key) {
+        if (key.keyCode === 13) { 
+          key.preventDefault()
+          element[0].blur()
         }
-        //triggering update of html
-        ngModelController.$render = updateHtmlValue
+      })
+      //triggering update of the ViewModel
+      element.on("change blur", function () { 
+         scope.$apply(updateViewModel)
+      })
 
-        function updateHtmlValue() {
-            var viewModelValue = ngModelController.$viewValue
-            // As undefined value won't update the html (leaving it with the current value),
-            // so I am using empty string instead.
-            viewModelValue = viewModelValue ? viewModelValue : ""
-            element.text(viewModelValue)
-        }
+      function updateViewModel() {
+          var htmlValue = element.text()
+          ngModelController.$setViewValue(htmlValue)
+      }
+      //triggering update of html
+      ngModelController.$render = updateHtmlValue
 
-    }    
+      function updateHtmlValue() {
+          var viewModelValue = ngModelController.$viewValue
+          // As undefined value won't update the html (leaving it with the current value),
+          // so I am using empty string instead.
+          viewModelValue = viewModelValue ? viewModelValue : ""
+          element.text(viewModelValue)
+      }
+
+  }
 }
 
 //requesting data after loading the angular stuff
 chrome.extension.sendRequest({action: "getData", interval: parseInt(localStorage.interval)})
 
-chrome.extension.onRequest.addListener(
-   function (request) {
-    var scope = angular.element($('[ng-app]')).scope()    //thats how we can refer App Scope outside the App Scope or Controller
-    
-    if (request.action === "updateView") {
-        
-        scope.$apply(function () { scope.list = bg.stockData })
-        scope.list.forEach(function (el, i) { bg.symbols[el.id] = el.e + ":" + el.t })
+chrome.extension.onRequest.addListener(function (request) {
+  var scope = angular.element($('[ng-app]')).scope()    //thats how we can refer App Scope outside the App Scope or Controller
+  
+  if (request.action === "updateView") {
+      
+      scope.$apply(function () { scope.list = bg.stockData })
+      scope.list.forEach(function (el, i) { bg.symbols[el.id] = el.e + ":" + el.t })
 
-    } else if (request.action === "updateTS") {
-        
-        scope.$apply(
-            function () {
-               scope.target   = bg.target
-               scope.stoploss = bg.stoploss
-            }
-        )
+  } else if (request.action === "updateTS") {
+      
+      scope.$apply(function () {
+         scope.target   = bg.target
+         scope.stoploss = bg.stoploss
+      })
 
-    }
   }
-)
+})
 
 function print() { console.log.apply(console, arguments) }
 function deComma(text) { return (text ? Number((text+"").replace(/,/g, "")) : "") }

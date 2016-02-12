@@ -1,22 +1,21 @@
  //hold symbols to be scraped
 var symbols   = localStorage.symbols ? JSON.parse(localStorage.symbols) : {}
 var inputSyms = []
+var stockData
 
 var stockData = [] //for holding stock data from ajax request
 var interval  = 60 //in seconds
 var loop      = setInterval(doStuff, interval * 1000)
 var eventNotified = {target:[], stoploss:[]}
 
-chrome.extension.onRequest.addListener(
-   function (request) {
-      if (request.action === "getData") {
-         interval = request.interval
-         fetch()
-         clearInterval(loop)
-         loop = setInterval(doStuff, interval * 1000)
-      }
+chrome.extension.onRequest.addListener(function (request) {
+   if (request.action === "getData") {
+      interval = request.interval
+      fetch()
+      clearInterval(loop)
+      loop = setInterval(doStuff, interval * 1000)
    }
-)
+})
 
 function doStuff() {
    if (!stopUpdate()) {
@@ -34,15 +33,16 @@ function fetch() {
 
    var syms = getValues(symbols).concat(inputSyms).sort()
    inputSyms = []
-   var url = "https://www.google.com/finance/info?client=ob&hl=en-IN&q=" + encodeURIComponent(syms.join(","))
-   $.ajax({url: url}).then(
-      function (data, status, xhr) {
-         if (status !== "success") { print("Couldn't fetch!!"); return }
-         print("fetching data!!")
-         stockData = JSON.parse(data.substr(3))
-         chrome.extension.sendRequest({action: "updateView"})
-      }
-   )
+   var url = "https://www.google.com/finance/info?client=ob&infotype=infoonebox&hl=en-IN&q=" + encodeURIComponent(syms.join(","))
+   $.ajax({
+      url: url,
+      dataType: "text"
+   }).then(function (data, status, xhr) {
+      if (status !== "success") { print("Couldn't fetch!!"); return }
+      print("fetching data!!")
+      stockData = JSON.parse(data.substr(3))
+      chrome.extension.sendRequest({action: "updateView"})
+   })
 }
 
 function print() { console.log.apply(console, arguments) }
@@ -58,34 +58,34 @@ var tAudio   = new Audio("icons/target.mp3")
 var sAudio   = new Audio("icons/stoploss.mp3")
 
 function checkTS(ToS) {
-   var cv, trORsl, findIn, regex, test, bodyStr, sym, ids = []
-   findIn = JSON.stringify(stockData)
-   ids = Object.keys(window[ToS])
+   var findIn = JSON.stringify(stockData)
+   var ids = Object.keys(window[ToS])
 
-   ids.forEach(
-      function (id, i) {
-         if (eventNotified[ToS].indexOf(id) > -1) { return }
+   ids.forEach(function (id, i) {
+      if (eventNotified[ToS].indexOf(id) > -1) { return }
 
-         trORsl = window[ToS][id] 
-         if (!trORsl) { return }
+      var trORsl = window[ToS][id] 
+      if (!trORsl) { return }
 
-         regex  = new RegExp('"' + id + '"[\\s\\S]+?"l":"(.*?)"', "i")
-         cv     = deComma(findIn.match(regex)[1])
+      var regex  = new RegExp('"' + id + '"[\\s\\S]+?"l":"(.*?)"', "i")
+      var cv     = deComma(findIn.match(regex)[1])
 
-         switch (ToS) {
-            case "target"   : test = (Number(cv) >= Number(trORsl)); break;
-            case "stoploss" : test = (Number(cv) <= Number(trORsl))
-         }
-
-         if (!test) { return }
-         // Show notifcation
-         sym     = findIn.match(regex.source.replace("l", "t"))[1]
-         bodyStr = ToS.proper() + " of " + trORsl + " achieved for " + sym + " with " + cv + " on around " + new Date().toLocaleTimeString()
-         notify(bodyStr, onShow)
-         eventNotified[ToS].push(id)
-         setTimeout(function () { eventNotified[ToS].splice(eventNotified[ToS].indexOf(id), 1) }, 15 * 60 * 1000)
+      var test
+      switch (ToS) {
+         case "target"   : test = (Number(cv) >= Number(trORsl)); break;
+         case "stoploss" : test = (Number(cv) <= Number(trORsl))
       }
-   )
+
+      if (!test) { return }
+      // Show notifcation
+      var sym     = findIn.match(regex.source.replace("l", "t"))[1]
+      var bodyStr = ToS.proper() + " of " + trORsl + " achieved for " + sym + " with " + cv + " on around " + new Date().toLocaleTimeString()
+      notify(bodyStr, onShow)
+      eventNotified[ToS].push(id)
+      setTimeout(function () {
+         eventNotified[ToS].splice(eventNotified[ToS].indexOf(id), 1)
+      }, 15 * 60 * 1000)
+   })
 
    function onShow() {
       if (ToS === "target") { tAudio.play() } else { sAudio.play() }
@@ -94,14 +94,13 @@ function checkTS(ToS) {
 }
 
 function notify(bodyStr, callback) {
-   var opt, title, notification, trORsl
-   trORsl = bodyStr.split(" ")[0]
-   opt    = {
+   var trORsl = bodyStr.split(" ")[0]
+   var opt    = {
       icon:"icons/" + trORsl.toLowerCase() + ".png",
       body: bodyStr
    }
-   title  = trORsl.toUpperCase() + " hit!!"
-   notification = new Notification(title, opt)
+   var title  = trORsl.toUpperCase() + " hit!!"
+   var notification = new Notification(title, opt)
    notification.onshow = callback
 }
 
