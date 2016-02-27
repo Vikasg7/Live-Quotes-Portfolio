@@ -5,9 +5,7 @@
 	Download the extension from the webstore
 </a>
 <br>
-<br>
-[![Live Quotes Portfolio Demo]("https://i.ytimg.com/vi/ePMg-YC6E1s/default.jpg")]
-("https://www.youtube.com/watch?v=ePMg-YC6E1s")
+<a href="https://www.youtube.com/watch?v=ePMg-YC6E1s">See it working on Youtube!!</a>
 
 <h4>Intro</h4>
 <p>Live Quotes Portfolio is a FREE Chrome Extension which keeps track of your stocks portfolio and also shows live stock quotes.It has following features :- </p>
