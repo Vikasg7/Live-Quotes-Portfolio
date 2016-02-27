@@ -6,7 +6,8 @@
 </a>
 <br>
 <br>
-<img src="http://3.bp.blogspot.com/-pygpuSKiyJI/VpKrbKrjutI/AAAAAAAAAu0/Nt8ipW24eVQ/s640/blog.png">
+[![Live Quotes Portfolio Demo]("https://i.ytimg.com/vi/ePMg-YC6E1s/default.jpg")]
+("https://www.youtube.com/watch?v=ePMg-YC6E1s")
 
 <h4>Intro</h4>
 <p>Live Quotes Portfolio is a FREE Chrome Extension which keeps track of your stocks portfolio and also shows live stock quotes.It has following features :- </p>
