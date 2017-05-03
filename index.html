@@ -90,7 +90,7 @@
                   <tr ng-repeat="ele in list | sortBy:sortKey:reverse:this track by ele.id" ng-attr-title="{{ele.name}}">
                      <td>
                         <a class="stockName" target="_blank" href="https://www.google.com/finance?q={{ele.t | uppercase}}">
-                             {{ele.name | uppercase}}
+                             {{ele.name}}
                         </a>
                      </td>
                      <td class="ids" style="display:none;">{{ele.id}}</td>

@@ -283,7 +283,7 @@ function addToggle() {
     } else if ($(this).text() === "Hide!") {
         $("#symbols").css("display", "none")
         $("#buttons a:eq(1)").removeAttr("style")        //displaying options button
-        $(this).text("Add!")
+        $(this).text("Add a new Stock!")
     }
 }
 
