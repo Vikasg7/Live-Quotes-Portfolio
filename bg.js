@@ -106,7 +106,7 @@ function notify(bodyStr, callback) {
 
 function stopUpdate() {
    var from = localStorage.from ? localStorage.from : 0
-   var to   = localStorage.to   ? localStorage.to    : 0
+   var to   = localStorage.to   ? localStorage.to   : 0
    var now  = new Date().toLocaleTimeString("en-US",{hour12:false})
        now  = now.length === 10 ? "0" + now : now
 

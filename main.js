@@ -23,7 +23,7 @@ function bodyCtrl($scope, $window) {
 
     $scope.$watch("from", function(newVal, oldVal) { localStorage.from = newVal })
     $scope.$watch("to", function(newVal, oldVal) { localStorage.to = newVal })
-    $scope.$watch("interval", function(newVal, oldVal) { localStorage.interval = newVal ? newVal : 5 })
+    $scope.$watch("interval", function(newVal, oldVal) { localStorage.interval = newVal ? newVal : 10 })
 
     //watches for updating bg page Variables instantly
     //using watch with 3rd parameter as true for deep checking of object
@@ -276,7 +276,7 @@ $("#input a:eq(0)").click(addToggle)
 $("#input a:eq(1)").click(optionsToggle)
 
 function addToggle() {
-    if ($(this).text() === "Add!") {
+    if ($(this).text() === "Add a new Stock!") {
         $("#symbols").removeAttr("style")
         $("#buttons a:eq(1)").css("display","none")        //hiding options button
         $(this).text("Hide!")
@@ -298,6 +298,6 @@ function optionsToggle() {
         $("#buttons a:eq(0)").removeAttr("style")        //displaying add button
         $("#buttons a:eq(2)").removeAttr("style")        //displaying contribute button
         $(this).text("Options")
-        chrome.extension.sendMessage({action: "getData", interval: parseInt(localStorage.interval)})
+        chrome.extension.sendRequest({action: "getData", interval: parseInt(localStorage.interval)})
     }
 }
