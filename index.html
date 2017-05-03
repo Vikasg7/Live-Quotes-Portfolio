@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <script type="text/javascript" src="jquery.js"></script>    
+      <script type="text/javascript" src="jquery.js"></script>
       <script type="text/javascript" src="angular.js"></script>
       <link rel="stylesheet" type="text/css" href="style.css">
    </head>
@@ -11,12 +11,12 @@
          <a href="http://mytrikks.blogspot.com/2015/12/live-quotes-portfolio-chrome-extension.html" target="_blank">
             <span>Live Quotes Portfolio</span>
          </a>
-         
+
          <div id="input">
-            
+
             <div id="boxes">
                <!-- Symbol input box -->
-               <input id="symbols" type="text" ng-model="symbol" ng-keypress="addSymbol($event)" style="display:none;">
+               <input id="symbols" type="text" placeholder="Stock symbol (from Google Finance)" ng-model="symbol" ng-keypress="addSymbol($event)" style="display:none;">
                <!-- Time input Box -->
                <div style="display:none">
                   Market opens
@@ -29,21 +29,21 @@
                <div style="display:none">
                   Update every
                   <input id="interval" type="Number" min="10" maxlength="4" ng-model="interval">
-                  secs
+                  seconds
                </div>
 
             </div>
 
             <div id="buttons">
-               <a href="#">Add!</a>
+               <a href="#">Add a new Stock!</a>
                <a href="#">Options</a>
                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F3QQCWFPWHBYE" target="_blank">Contribute</a>
             </div>
          </div>
-      
+
          <div id="container">
             <table>
-               
+
                <thead>
                   <tr>
                      <th ng-click="toggleSort('t')">
@@ -82,12 +82,17 @@
                      <th ng-click="toggleSort('pROI')">
                         %ROI<span class="sortorder" ng-show="sortKey === 'pROI'" ng-class={reverse:reverse}></span>
                      </th>
+                     <th class="closeColumn"></th>
                   </tr>
                </thead>
-                  
+
                <tbody>
                   <tr ng-repeat="ele in list | sortBy:sortKey:reverse:this track by ele.id" ng-attr-title="{{ele.name}}">
-                     <td ng-class="redOrGreen(ele)">{{ele.t | uppercase}}</td>
+                     <td>
+                        <a class="stockName" target="_blank" href="https://www.google.com/finance?q={{ele.t | uppercase}}">
+                             {{ele.name | uppercase}}
+                        </a>
+                     </td>
                      <td class="ids" style="display:none;">{{ele.id}}</td>
                      <td>{{ele.l}}</td>
                      <td color-up>{{ele.c}}</td>
@@ -100,7 +105,7 @@
                      <td name="value">{{value(ele) | number:2}}</td>
                      <td name="ROI" color-up>{{ROI(ele) | number:2}}</td>
                      <td name="pROI" color-up>{{percentROI(ele) | number:2}}</td>
-                     <td class="close" ng-click="delRow(ele)">&nbsp;-&nbsp;</td>
+                     <td class="close" color-up ng-click="delRow(ele)" title="Delete this row">&nbsp;x&nbsp;</td>
                   </tr>
                </tbody>
 
