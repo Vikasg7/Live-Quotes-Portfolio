@@ -11,10 +11,16 @@ div#main a span {
 	font-size: 14px;
 }
 
+a {
+    color: #2f2fc5;
+    text-decoration: none;
+}
+
 #main>a{
 	text-decoration: none;
 	color: black;
 }
+
 
 table {
 	margin: 0;
@@ -24,8 +30,7 @@ table {
 tbody td, tfoot td {
 	border: 1px solid #E3E3E3;
 	text-align: right;
-	padding-right: 2px;
-	padding-left: 2px;
+	padding: 3px;
 	font-size: 12px;
 }
 
@@ -37,10 +42,12 @@ thead th {
 	border: 1px solid #E3E3E3;
 	color: black;
 	font-weight: bold;
-	padding-right: 2px;
-	padding-left: 2px;
+	padding: 5px;
 	min-width: 40px;
 	cursor: pointer;
+}
+thead th.closeColumn {
+    min-width: auto;
 }
 
 tbody tr:nth-child(odd){
@@ -57,11 +64,8 @@ tbody td.close {
 	text-align: center;
 	padding: 0;
 	cursor: pointer;
-	color: #5B86B1;
+	color: #c72b2b;
 	font-weight: bold;
-	background-color: white;
-	border: 0px none;
-	padding-top:1px;
 }
 /*
 table tr:hover {
@@ -114,18 +118,18 @@ thead span {
 
 #boxes div:nth-child(2) {
 	padding-right: 8px;
-	border-right: 1px solid lightgrey; 
+	border-right: 1px solid lightgrey;
 }
 
 #boxes div:nth-child(3) {
 	padding-left: 8px;
-	border-left: 1px solid lightgrey; 
+	border-left: 1px solid lightgrey;
 }
 
 #from, #to {
 	height: 13px;
 	width: 32px;
-} 
+}
 
 #interval {
 	height: 13px;
@@ -142,6 +146,10 @@ thead span {
 	color: blue;
 }
 
+#symbols {
+    width: 250px;
+}
+
 /*sort stuff*/
 .sortorder:after {
   content: '\25b2';
@@ -151,10 +159,19 @@ thead span {
   content: '\25bc';
 }
 
-td[contenteditable]:hover, 
+td[contenteditable]:hover,
 td[contenteditable]:focus {
 	background-color: lightgrey;
 	color: black;
+}
+
+.stockName {
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 120px;
+    white-space: nowrap;
+    display: inline-block;
 }
 
 .sRed {
