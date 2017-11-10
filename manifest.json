@@ -12,7 +12,7 @@
     },
 
    "browser_action": {
-      "default_title": "exhibitors",
+      "default_title": "Live Quotes Portfolio",
       "default_popup": "dist/popup/index.html"
    },
 
