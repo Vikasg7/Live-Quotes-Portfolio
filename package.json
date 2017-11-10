@@ -1,0 +1,46 @@
+{
+  "name": "live-quotes-portfolio",
+  "version": "1.0.0",
+  "description": "A chrome extension for live stock quotes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "html-css": "cd src && find . \\( -name '*.html' -o -name '*.css' \\) -type f -exec cp --parents {} ../dist/ ';' && echo Done!",
+    "tsc:w": "tsc -w",
+    "watchify-app": "watchify dist/app/app.js -o dist/app/bundle.js",
+    "watchify-popup": "watchify dist/popup/app.js -o dist/popup/bundle.js",
+    "watchify-bg": "watchify dist/bg/bg.js -o dist/bg/bundle.js",
+    "watch": "@echo off && start /B \"\" watch \"npm run html-css\" src/ && start /B \"\" npm run tsc:w && start /B \"\" npm run watchify-app && start /B \"\" npm run watchify-popup && start /B \"\" npm run watchify-bg"
+  },
+  "author": "Vikas Gautam <v33vikasgautam@gmail.com> (http://mytrikks.blogspot.com)",
+  "license": "MIT",
+  "dependencies": {
+    "@angular/animations": "latest",
+    "@angular/cli": "^1.4.2",
+    "@angular/common": "latest",
+    "@angular/compiler": "latest",
+    "@angular/compiler-cli": "latest",
+    "@angular/core": "latest",
+    "@angular/forms": "latest",
+    "@angular/http": "latest",
+    "@angular/platform-browser": "latest",
+    "@angular/platform-browser-dynamic": "latest",
+    "@angular/platform-server": "latest",
+    "@angular/router": "latest",
+    "@types/chrome": "0.0.47",
+    "@types/jquery": "^3.2.7",
+    "core-js": "^2.5.1",
+    "jquery": "^3.2.1",
+    "rxjs": "^5.4.3",
+    "thenForEach": "git+https://github.com/Vikasg7/thenForEach.git",
+    "typescript": "^2.4.1",
+    "zone.js": "^0.8.17"
+  },
+  "devDependencies": {
+    "@types/event-emitter": "^0.3.2",
+    "browserify": "^14.4.0",
+    "event-emitter": "^0.3.5",
+    "watch": "^1.0.2",
+    "watchify": "^3.9.0"
+  }
+}

@@ -1,0 +1,50 @@
+<div *ngIf="!data?.length" class="text-red">
+   Please add symbols from Settings tab.
+</div>
+<table *ngIf="data?.length">
+   <thead>
+      <tr>
+         <th class="symbol">Symbol</th>
+         <th>Price</th>
+         <th>Target</th>
+         <th>Stoploss</th>
+         <th>Shares</th>
+         <th>Cost</th>
+         <th>Investment</th>
+         <th>Value</th>
+         <th>ROI</th>
+         <th>ROI%</th>
+         <th>&nbsp;</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let item of data trackBy: trackByFn">
+         <td class='symbol'>{{item.symbol}}</td>
+         <td>{{item.price | number:'1.2-4'}}</td>
+         <td contenteditable [class.green]="item.price >= item.target" [textContent]="item.target" (input)="update(item,'target', $event.target)"></td>
+         <td contenteditable [class.red]="item.price <= item.stoploss" [textContent]="item.stoploss" (input)="update(item, 'stoploss', $event.target)"></td>
+         <td contenteditable [textContent]="item.shares" (input)="update(item, 'shares', $event.target)"></td>
+         <td contenteditable [textContent]="item.cost" (input)="update(item, 'cost', $event.target)"></td>
+         <td>{{item.shares * item.cost | number:'1.2-2'}}</td> <!-- Investment -->
+         <td>{{item.shares * item.price | number:'1.2-2'}}</td> <!-- Value -->
+         <td color-up>{{item.shares * (item.price - item.cost) | number:'1.2-2'}}</td> <!-- ROI -->
+         <td color-up>{{(item.price - item.cost) / item.price * 100 | number:'1.2-2'}}</td> <!-- ROI% -->         
+         <td class="del" (click)="delSymbol(item.symbol)">&nbsp;X&nbsp;</td>
+      </tr>
+   </tbody>
+   <tfoot>
+      <tr>
+         <th class="symbol">Total</th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th>{{tInvestment() | number:'1.2-2'}}</th>
+         <th>{{tValue() | number:'1.2-2'}}</th>
+         <th color-up>{{tValue() - tInvestment() | number:'1.2-2'}}</th>
+         <th color-up>{{(tValue() - tInvestment()) * 100 / tValue() | number:'1.2-2'}}</th>
+         <th></th>
+      </tr>
+   </tfoot>
+</table>

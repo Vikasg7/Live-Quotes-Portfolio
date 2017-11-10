@@ -1,0 +1,22 @@
+<div class="app">
+
+   <div class="header">
+      <h3 class="pull-left">Live Quotes Portfolio</h3>
+      <div class="pull-right tabs">
+         <a routerLink="/home">Home</a>
+         <a routerLink="/settings">Settings</a>
+      </div>
+      <div class="clear-fix"></div>
+      <hr>
+   </div>
+   
+   <div class="body">
+      <router-outlet></router-outlet>   
+   </div>
+
+   <div class="footer">
+      <hr>
+      {{error}}&nbsp;
+   </div>
+
+</div>

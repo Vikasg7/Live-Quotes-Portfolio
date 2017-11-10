@@ -1,0 +1,28 @@
+table {
+   min-width: 500px;
+   border: 1px solid lightgray;
+   border-collapse: collapse;
+}
+
+td, th {
+   border: 1px solid lightgray;
+   padding: 2.5px 5px;
+}
+
+td:not([class='symbol']), th:not([class='symbol']) {
+   text-align: right;
+} 
+
+.red {
+   background-color: #FF3300;
+   color: white;
+}
+
+.green {
+   background-color: #339900;
+   color: white;
+}
+
+td.del {
+   cursor: pointer;
+}

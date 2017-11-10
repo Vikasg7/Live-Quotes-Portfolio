@@ -1,0 +1,18 @@
+So Here are the steps :-
+Installation :-
+1. git  clone https://Vikasg7@bitbucket.org/Vikasg7/john.git
+2. You will find all the future tools in the john folder now. 
+3. To update current tools or add new ones, do 'git pull origin master'
+
+Installing chrome extension :-
+1. Open chrome://extensions
+2. Enable developer mode
+3. Load unpacked extensions.
+4. Choose the extension folder, click ok.
+
+Using exhibitors chrome extension :-
+1. Open the event page where exhibitors shows up. Scroll down and load up all the exhibitors, if needed. OR just make sure all the exhibitors' listings are visible on the page.
+2. Click extension icon (E) in this case. and Click 'Click to inject App' button.
+3. A dropdown menu will appear on the page.
+4. Load up input file. 
+5. Click start scrape.

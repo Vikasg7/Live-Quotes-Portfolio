@@ -1,0 +1,16 @@
+.tabs a {
+   padding: 3px 5px;
+}
+
+.header {
+   height: 25px;
+}
+
+.body {
+   height: Calc(250px - 25px - 20px);
+   overflow-y: auto;
+}
+
+.footer {
+   height: 20px;
+}

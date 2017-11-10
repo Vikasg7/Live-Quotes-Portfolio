@@ -1,31 +1,37 @@
 {
-  
-  "manifest_version":2,
+   "manifest_version": 2,
 
-  "name":"Live Quotes Portfolio",
+   "name": "Live Quotes Portfolio",
 
-  "description":"Live Quotes with a Nice Portfolio View & Target & stoploss Notifications",
-  
-  "version":"4.3",
-  
-  "icons":{
-      "128": "icons/icon128_1.png"
+   "description": "Live Quotes with a Nice Portfolio View & Target & stoploss Notifications",
+
+   "version": "4.5.0",
+
+   "icons":{
+       "128": "assets/icon128.png"
     },
 
-  "browser_action": {
-    "default_title": "Live Quotes Portfolio",
-    "default_popup":"index.html"
-  },
-  
-  "background":{
-    "page":"background.html",
-    "persistent":true
-  },
-  
-  "permissions":[
-    "storage",
-    "https://www.google.com/*",
-    "notifications"
-  ]
+   "browser_action": {
+      "default_title": "exhibitors",
+      "default_popup": "dist/popup/index.html"
+   },
+
+   "background": {
+      "page": "dist/bg/index.html",
+      "persistent": true
+   },
+   
+   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+
+   // "content_scripts": [{
+   //    "matches": ["https://www.linkedin.com/vsearch/p*"],
+   //    "js": [
+   //    ],
+   //    "run_at": "document_end"
+   // }],
+
+   "web_accessible_resources": ["dist/*"],
+
+   "permissions": ["storage", "tabs", "activeTab", "https://www.google.com/*", "notifications"]
 
 }

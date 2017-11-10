@@ -1,0 +1,35 @@
+#myApp {
+   position: fixed;
+   right: 0;
+   top: 0;
+
+   width: 200px;
+   z-index: 99999;
+   background-color: whitesmoke;
+}
+
+#myApp .view {
+   padding: 5px;
+   display: none;
+}
+
+#myApp .btns button {
+   display: inline-block;
+   width: 100%;
+   margin-bottom: 2px;
+}
+
+#myApp span.shutter {
+   position: absolute;
+   top: 100%;
+   right: 50%;
+   background-color: Grey;
+   color: white;
+   cursor: pointer;
+   padding: 2px 4px;
+}
+
+#myApp span.shutter:hover {
+   background-color: lightgrey;
+   color: black;
+}
