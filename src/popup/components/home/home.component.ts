@@ -20,7 +20,7 @@ export class HomeComponent implements OnDestroy, OnInit {
     this._onData = this._dataSrv.onData().subscribe((data: Array<any>) => {
       if (!data) return
       this.data = data
-      if (!data.length) this.noData = true
+      if (!data.length) this.noData = true; else this.noData = false;
       this._changeDetector.detectChanges() // running change detection manually.
     })
   }

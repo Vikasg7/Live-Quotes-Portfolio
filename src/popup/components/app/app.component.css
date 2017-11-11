@@ -15,9 +15,13 @@
    height: 20px;
 }
 
+.footer a {
+  margin: auto 2px;
+}
+
 .truncate {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: calc(100% - 120px);
+  width: calc(100% - 135px);
 }

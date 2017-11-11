@@ -128,6 +128,8 @@ let HomeComponent = class HomeComponent {
             this.data = data;
             if (!data.length)
                 this.noData = true;
+            else
+                this.noData = false;
             this._changeDetector.detectChanges(); // running change detection manually.
         });
     }
