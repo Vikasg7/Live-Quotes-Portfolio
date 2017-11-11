@@ -1,11 +1,13 @@
-<div *ngIf="!data?.length" class="text-red">
+<div *ngIf="noData" class="text-red">
    Please add symbols from Settings tab.
 </div>
 <table *ngIf="data?.length">
    <thead>
-      <tr>
+      <tr style="background-color: #E0E0E0">
          <th class="symbol">Symbol</th>
          <th>Price</th>
+         <th>Change</th>
+         <th>%Change</th>
          <th>Target</th>
          <th>Stoploss</th>
          <th>Shares</th>
@@ -18,9 +20,11 @@
       </tr>
    </thead>
    <tbody>
-      <tr *ngFor="let item of data trackBy: trackByFn">
+      <tr *ngFor="let item of data; let odd = odd; trackBy: trackByFn" [class.grey]="odd">
          <td class='symbol'>{{item.symbol}}</td>
          <td>{{item.price | number:'1.2-4'}}</td>
+         <td color-up>{{item.price - item.open | number:'1.2-4'}}</td>
+         <td color-up>{{(item.price - item.open) * 100 / item.price | number:'1.2-2'}}</td>
          <td contenteditable [class.green]="item.price >= item.target" [textContent]="item.target" (input)="update(item,'target', $event.target)"></td>
          <td contenteditable [class.red]="item.price <= item.stoploss" [textContent]="item.stoploss" (input)="update(item, 'stoploss', $event.target)"></td>
          <td contenteditable [textContent]="item.shares" (input)="update(item, 'shares', $event.target)"></td>
@@ -33,8 +37,10 @@
       </tr>
    </tbody>
    <tfoot>
-      <tr>
+      <tr style="background-color: #E0E0E0">
          <th class="symbol">Total</th>
+         <th></th>
+         <th></th>
          <th></th>
          <th></th>
          <th></th>

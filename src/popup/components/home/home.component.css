@@ -1,6 +1,6 @@
 table {
    min-width: 500px;
-   border: 1px solid lightgray;
+   border: 1px solid grey;
    border-collapse: collapse;
 }
 
@@ -25,4 +25,8 @@ td:not([class='symbol']), th:not([class='symbol']) {
 
 td.del {
    cursor: pointer;
+}
+
+.grey {
+   background-color: whitesmoke;
 }

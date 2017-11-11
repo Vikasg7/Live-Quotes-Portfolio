@@ -21,6 +21,8 @@ let HomeComponent = class HomeComponent {
             if (!data)
                 return;
             this.data = data;
+            if (!data.length)
+                this.noData = true;
             this._changeDetector.detectChanges(); // running change detection manually.
         });
     }

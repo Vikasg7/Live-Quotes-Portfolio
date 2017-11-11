@@ -14,3 +14,10 @@
 .footer {
    height: 20px;
 }
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: calc(100% - 120px);
+}

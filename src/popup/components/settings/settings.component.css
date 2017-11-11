@@ -1,3 +1,9 @@
 #from, #to {
    width: 32px;
 }
+
+div.setting {
+   margin: 5px 0px;
+   border: 1px solid #C8C8C8;
+   padding: 5px;
+}

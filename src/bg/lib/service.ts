@@ -26,7 +26,14 @@ export class QuoteService {
       return fetch(url)
          .then((resp) => resp.status >= 400 ? Promise.reject(`${resp.status} - ${resp.statusText}`) : resp.text())
          .then((text: string) => JSON.parse(text))
-         .then((j: any) => ({price: parseFloat(j["Time Series (Daily)"][j["Meta Data"]["3. Last Refreshed"].split(" ")[0]]["4. close"])}))
+         .then((j: any) => {
+            const dates = Object.keys(j["Time Series (Daily)"])
+            const today = dates[0]
+            const lastDay = dates[1]
+            const price = parseFloat(j["Time Series (Daily)"][today]["4. close"])
+            const open = parseFloat(j["Time Series (Daily)"][lastDay]["4. close"])
+            return {price, open}
+         })
    }
 
    public addSymbol(symbols: Array<string>, reply: (value: any) => void): Promise<void> {
@@ -37,7 +44,12 @@ export class QuoteService {
                this._reportError(`${symbol} is a already present`)
             } else {
                return this._getQuotes(symbol.trim())
-                  .then((resp: any) => this._data.push(Object.assign(resp, {symbol})))
+                  .then((resp: any) => {
+                     resp.symbol = symbol
+                     resp.cost = 0
+                     resp.shares = 0
+                     this._data.push(resp)
+                  })
                   .catch((error: any) => this._reportError(`${symbol} -> ${error}`))
             }
          })

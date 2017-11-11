@@ -15,7 +15,6 @@ let ColorUp = class ColorUp {
         this._el = _el;
     }
     onValChange() {
-        console.log("DOMSubtreeModified");
         const val = this._el.nativeElement.innerText;
         if (val.includes("-")) {
             this._el.nativeElement.style.color = "red";

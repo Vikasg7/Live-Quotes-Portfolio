@@ -1,30 +1,28 @@
 <div class="settings">
    <!-- Asking for symbols from user -->
-   <div>
+   <div class="setting">
       <input type="text" #symbolInput placeholder="Enter Symbol here...">
       <button (click)="add(symbolInput)">Add</button>
+      <p>
+         <span *ngFor="let item of data">{{item.symbol}}&nbsp;</span>
+      </p>
    </div>
-   <p>
-      <span *ngFor="let item of data">{{item.symbol}}&nbsp;</span>
-   </p>
    <!-- listing added symbols -->
-   <hr>
-   <p><strong>Note:</strong> Please generate your own API key from <a target="_blank" href="https://www.alphavantage.co/support/#api-key">alphavantage</a> website and save it here. Otherwise, API will fail to fetch the quotes.</p>
-   <div>
+   <div class="setting">
+      <p><strong>Note:</strong> Please generate your own API key from <a target="_blank" href="https://www.alphavantage.co/support/#api-key">alphavantage</a> website and save it here. Otherwise, API will fail to fetch the quotes.</p>
       <input [(ngModel)]="apiKey" type="text" placeholder="Enter API key here...">
       <button (click)="saveAPIKey()">Save</button>
    </div>
    <!-- update interval -->
-   <hr>
-   <p>
-      <strong>Note:</strong> Enter update interval in seconds. Default is 60 seconds. Make sure you update it according to your needs. Higher is better for the servers.
-   </p>
-   <div>
+   <div class="setting">
+      <p>
+         <strong>Note:</strong> Enter update interval in seconds. Default is 60 seconds. Make sure you update it according to your needs. Higher is better for the servers.
+      </p>
       <input [(ngModel)]="updateInterval" type="number" placeholder="Enter Update Interval in sec..." min="60" maxlength="4">
       <button (click)="saveUpInt(upIntInput)">Save</button>
    </div>
-   <hr>
-   <div>
+   <!-- market open/close time -->
+   <div class="setting">
       <p>
          <strong>Note:</strong> Please update following numbers according to your needs. This will help avoiding requesting quotes after market is closed. 
       </p>

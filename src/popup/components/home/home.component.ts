@@ -12,6 +12,7 @@ export class HomeComponent implements OnDestroy, OnInit {
   private _onData: Subscription
   private _intervalRef: NodeJS.Timer
   private _intervalInSec: number
+  public noData: boolean
 
   constructor(private _dataSrv: DataSrv, private _changeDetector: ChangeDetectorRef) {
     this._intervalInSec = 5
@@ -19,6 +20,7 @@ export class HomeComponent implements OnDestroy, OnInit {
     this._onData = this._dataSrv.onData().subscribe((data: Array<any>) => {
       if (!data) return
       this.data = data
+      if (!data.length) this.noData = true
       this._changeDetector.detectChanges() // running change detection manually.
     })
   }

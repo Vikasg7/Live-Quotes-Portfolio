@@ -18,7 +18,14 @@ class QuoteService {
         return fetch(url)
             .then((resp) => resp.status >= 400 ? Promise.reject(`${resp.status} - ${resp.statusText}`) : resp.text())
             .then((text) => JSON.parse(text))
-            .then((j) => ({ price: parseFloat(j["Time Series (Daily)"][j["Meta Data"]["3. Last Refreshed"].split(" ")[0]]["4. close"]) }));
+            .then((j) => {
+            const dates = Object.keys(j["Time Series (Daily)"]);
+            const today = dates[0];
+            const lastDay = dates[1];
+            const price = parseFloat(j["Time Series (Daily)"][today]["4. close"]);
+            const open = parseFloat(j["Time Series (Daily)"][lastDay]["4. close"]);
+            return { price, open };
+        });
     }
     addSymbol(symbols, reply) {
         return Promise.resolve(symbols)
@@ -29,7 +36,12 @@ class QuoteService {
             }
             else {
                 return this._getQuotes(symbol.trim())
-                    .then((resp) => this._data.push(Object.assign(resp, { symbol })))
+                    .then((resp) => {
+                    resp.symbol = symbol;
+                    resp.cost = 0;
+                    resp.shares = 0;
+                    this._data.push(resp);
+                })
                     .catch((error) => this._reportError(`${symbol} -> ${error}`));
             }
         })

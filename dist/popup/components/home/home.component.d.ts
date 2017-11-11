@@ -7,6 +7,7 @@ export declare class HomeComponent implements OnDestroy, OnInit {
     private _onData;
     private _intervalRef;
     private _intervalInSec;
+    noData: boolean;
     constructor(_dataSrv: DataSrv, _changeDetector: ChangeDetectorRef);
     ngOnInit(): void;
     ngOnDestroy(): void;

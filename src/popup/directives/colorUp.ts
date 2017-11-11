@@ -10,7 +10,6 @@ export class ColorUp {
    constructor(private _el: ElementRef) {}
 
    public onValChange() {
-      console.log("DOMSubtreeModified")
       const val = this._el.nativeElement.innerText
       if (val.includes("-")) {
          this._el.nativeElement.style.color = "red"
