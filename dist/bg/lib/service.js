@@ -58,6 +58,7 @@ class QuoteService {
     getData(reply) {
         reply(this._data);
     }
+    // For updating cost, shares, target and stoploss
     update(msg) {
         const i = this._data.findIndex((j, i) => j.symbol === msg.symbol);
         this._data[i][msg.prop] = msg.value;
@@ -85,7 +86,10 @@ class QuoteService {
             .thenForEach((item) => {
             const stock = item[1];
             return this._getQuotes(stock.symbol)
-                .then((resp) => stock.price = resp.price)
+                .then((resp) => {
+                stock.price = resp.price;
+                stock.open = resp.open;
+            })
                 .catch((error) => this._reportError(`${stock.symbol} -> ${error}`))
                 .then(() => this._wait());
         })

@@ -68,6 +68,7 @@ export class QuoteService {
       reply(this._data)
    }
    
+   // For updating cost, shares, target and stoploss
    public update(msg: any) {
       const i = this._data.findIndex((j, i) => j.symbol === msg.symbol)
       this._data[i][msg.prop] = msg.value
@@ -96,7 +97,10 @@ export class QuoteService {
          .thenForEach<any>((item) => {
             const stock = item[1]
             return this._getQuotes(stock.symbol)
-               .then((resp: any) => stock.price = resp.price)
+               .then((resp: any) => {
+                  stock.price = resp.price
+                  stock.open = resp.open
+               })
                .catch((error: any) => this._reportError(`${stock.symbol} -> ${error}`))
                .then(() => this._wait())
          })
