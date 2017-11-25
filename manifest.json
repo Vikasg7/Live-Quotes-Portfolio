@@ -5,7 +5,7 @@
 
    "description": "Live Quotes with a Nice Portfolio View & Target & stoploss Notifications",
 
-   "version": "4.5.1",
+   "version": "4.5.2",
 
    "icons":{
        "128": "assets/icon128.png"
@@ -25,6 +25,6 @@
 
    "web_accessible_resources": ["dist/*"],
 
-   "permissions": ["storage", "tabs", "activeTab", "https://www.google.com/*", "notifications"]
+   "permissions": ["storage", "tabs", "activeTab", "https://www.alphavantage.co/*", "notifications"]
 
 }

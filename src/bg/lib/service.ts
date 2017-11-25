@@ -92,7 +92,11 @@ export class QuoteService {
    }
 
    private _updateQuotes() {
-      if (this._stopUpdate()) { console.log("Market is closed. Can't fetch!"); return }
+      if (this._stopUpdate()) {
+         this._saveData() // Saving the latest prices when update is stopped.
+         console.log("Market is closed. Can't fetch!");
+         return
+      }
       return Promise.resolve(this._data.entries())
          .thenForEach<any>((item) => {
             const stock = item[1]

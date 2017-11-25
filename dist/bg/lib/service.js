@@ -79,6 +79,7 @@ class QuoteService {
     }
     _updateQuotes() {
         if (this._stopUpdate()) {
+            this._saveData(); // Saving the latest prices when update is stopped.
             console.log("Market is closed. Can't fetch!");
             return;
         }
