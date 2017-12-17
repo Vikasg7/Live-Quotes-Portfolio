@@ -11,9 +11,10 @@ export declare class HomeComponent implements OnDestroy, OnInit {
     constructor(_dataSrv: DataSrv, _changeDetector: ChangeDetectorRef);
     ngOnInit(): void;
     ngOnDestroy(): void;
+    onEnter(e: any): void;
     update(item: any, prop: string, ele: Element): void;
-    delSymbol(symbol: string): void;
-    trackByFn(index: number, item: any): number;
+    delSymbol(id: number): void;
+    trackByFn(index: number, item: any): any;
     tInvestment(): any;
     tValue(): any;
 }

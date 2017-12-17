@@ -6,6 +6,6 @@ export declare class DataSrv {
     getData(): void;
     onData(): Observable<any>;
     add(symbols: Array<string>): void;
-    del(symbol: string): void;
+    del(id: number): void;
     update(msg: any): void;
 }

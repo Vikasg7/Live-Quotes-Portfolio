@@ -141,18 +141,23 @@ let HomeComponent = class HomeComponent {
         this._onData.unsubscribe();
         clearInterval(this._intervalRef);
     }
+    onEnter(e) {
+        if (e.keyCode === 13) {
+            e.target.blur();
+        }
+    }
     update(item, prop, ele) {
         const value = ele.textContent;
         item[prop] = value;
         this._changeDetector.detectChanges();
         // Updating the background page
-        this._dataSrv.update({ action: "Update", symbol: item.symbol, prop, value });
+        this._dataSrv.update({ action: "Update", id: item.id, prop, value });
     }
-    delSymbol(symbol) {
-        this._dataSrv.del(symbol);
+    delSymbol(id) {
+        this._dataSrv.del(id);
     }
     trackByFn(index, item) {
-        return index;
+        return item.id;
     }
     tInvestment() {
         return this.data.reduce((agg, item) => agg + (item.shares * item.cost), 0);
@@ -341,8 +346,8 @@ let DataSrv = class DataSrv {
         // console.log("Adding symbols ", symbols)
         this._sendMsg.sendMessage({ action: "Add", symbols });
     }
-    del(symbol) {
-        this._sendMsg.sendMessage({ action: "Del", symbol });
+    del(id) {
+        this._sendMsg.sendMessage({ action: "Del", id });
     }
     update(msg) {
         this._sendMsg.sendMessage(msg);

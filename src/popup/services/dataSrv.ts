@@ -20,8 +20,8 @@ export class DataSrv {
       this._sendMsg.sendMessage({action: "Add", symbols})
    }
 
-   public del(symbol: string) {
-      this._sendMsg.sendMessage({action: "Del", symbol})
+   public del(id: number) {
+      this._sendMsg.sendMessage({action: "Del", id})
    }
 
    public update(msg: any) {

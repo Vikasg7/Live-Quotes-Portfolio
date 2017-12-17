@@ -26,8 +26,8 @@ let DataSrv = class DataSrv {
         // console.log("Adding symbols ", symbols)
         this._sendMsg.sendMessage({ action: "Add", symbols });
     }
-    del(symbol) {
-        this._sendMsg.sendMessage({ action: "Del", symbol });
+    del(id) {
+        this._sendMsg.sendMessage({ action: "Del", id });
     }
     update(msg) {
         this._sendMsg.sendMessage(msg);

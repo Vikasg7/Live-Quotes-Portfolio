@@ -10,7 +10,7 @@ function onMessage(msg: any, sender: chrome.runtime.MessageSender, reply: (msg: 
          QuoteSrv.addSymbol(<Array<string>>msg.symbols, reply)
          break
       case "Del":
-         QuoteSrv.delSymbol(msg.symbol, reply)
+         QuoteSrv.delSymbol(msg, reply)
          break
       case "Get":
          QuoteSrv.getData(reply)

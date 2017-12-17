@@ -10,7 +10,7 @@ export declare class QuoteService {
     constructor();
     private _getQuotes(q);
     addSymbol(symbols: Array<string>, reply: (value: any) => void): Promise<void>;
-    delSymbol(symbol: string, reply: (value: any) => void): void;
+    delSymbol(msg: any, reply: (value: any) => void): void;
     getData(reply: (value: any) => void): void;
     update(msg: any): void;
     updateInterval(msg: any): void;
@@ -22,4 +22,5 @@ export declare class QuoteService {
     private _notify(trSl, item);
     private _checkTS();
     private _stopUpdate();
+    private _addId();
 }

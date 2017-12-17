@@ -5,7 +5,7 @@
 
    "description": "Live Quotes with a Nice Portfolio View & Target & stoploss Notifications",
 
-   "version": "4.5.2",
+   "version": "4.5.3",
 
    "icons":{
        "128": "assets/icon128.png"

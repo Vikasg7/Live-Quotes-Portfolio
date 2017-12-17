@@ -9,7 +9,7 @@ function onMessage(msg, sender, reply) {
             QuoteSrv.addSymbol(msg.symbols, reply);
             break;
         case "Del":
-            QuoteSrv.delSymbol(msg.symbol, reply);
+            QuoteSrv.delSymbol(msg, reply);
             break;
         case "Get":
             QuoteSrv.getData(reply);

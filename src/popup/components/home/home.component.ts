@@ -35,20 +35,26 @@ export class HomeComponent implements OnDestroy, OnInit {
     clearInterval(this._intervalRef)
   }
 
+  public onEnter(e: any) {
+     if (e.keyCode === 13) {
+        e.target.blur()
+     }
+  }
+
   public update(item: any, prop: string, ele: Element) {
     const value = ele.textContent
     item[prop] = value
     this._changeDetector.detectChanges()
     // Updating the background page
-    this._dataSrv.update({action: "Update", symbol: item.symbol, prop, value})
+    this._dataSrv.update({action: "Update", id: item.id, prop, value})
   }
 
-  public delSymbol(symbol: string) {
-    this._dataSrv.del(symbol)
+  public delSymbol(id: number) {
+    this._dataSrv.del(id)
   }
 
   public trackByFn(index: number, item: any) {
-    return index
+    return item.id
   }
 
   public tInvestment() {

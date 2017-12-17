@@ -26,15 +26,15 @@
          <td>{{item.price | number:'1.2-4'}}</td>
          <td color-up>{{item.price - item.open | number:'1.2-4'}}</td>
          <td color-up>{{(item.price - item.open) * 100 / item.price | number:'1.2-2'}}</td>
-         <td contenteditable [class.green]="item.price >= item.target" [textContent]="item.target" (input)="update(item,'target', $event.target)"></td>
-         <td contenteditable [class.red]="item.price <= item.stoploss" [textContent]="item.stoploss" (input)="update(item, 'stoploss', $event.target)"></td>
-         <td contenteditable [textContent]="item.shares" (input)="update(item, 'shares', $event.target)"></td>
-         <td contenteditable [textContent]="item.cost" (input)="update(item, 'cost', $event.target)"></td>
+         <td contenteditable [class.green]="item.price >= item.target && item.target !== ''" [textContent]="item.target" (keypress)="onEnter($event)" (input)="update(item,'target', $event.target)"></td>
+         <td contenteditable [class.red]="item.price <= item.stoploss && item.stoploss !== ''" [textContent]="item.stoploss" (keypress)="onEnter($event)" (input)="update(item, 'stoploss', $event.target)"></td>
+         <td contenteditable [textContent]="item.shares" (keypress)="onEnter($event)" (input)="update(item, 'shares', $event.target)"></td>
+         <td contenteditable [textContent]="item.cost" (keypress)="onEnter($event)" (input)="update(item, 'cost', $event.target)"></td>
          <td>{{item.shares * item.cost | number:'1.2-2'}}</td> <!-- Investment -->
          <td>{{item.shares * item.price | number:'1.2-2'}}</td> <!-- Value -->
          <td color-up>{{item.shares * (item.price - item.cost) | number:'1.2-2'}}</td> <!-- ROI -->
          <td color-up>{{(item.price - item.cost) / item.price * 100 | number:'1.2-2'}}</td> <!-- ROI% -->         
-         <td class="del" (click)="delSymbol(item.symbol)">&nbsp;X&nbsp;</td>
+         <td class="del" (click)="delSymbol(item.id)">&nbsp;X&nbsp;</td>
       </tr>
    </tbody>
    <tfoot>

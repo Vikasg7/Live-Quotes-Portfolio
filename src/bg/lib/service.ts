@@ -15,6 +15,9 @@ export class QuoteService {
       this._updateIntervalInSec = parseFloat(localStorage["updateInterval"]) || 60
       this._updateIntervalRef = setInterval(() => this._updateQuotes(), this._updateIntervalInSec * 1000)
       this._waitInSec = 2
+      // This is a patch to add ids if they are not present
+      // ids will not be present when LQP updates to v4.5.3 from v4.5.2
+      this._addId()
       // Updating quotes on load
       this._updateQuotes()
       this._tAudio = new Audio("../../../assets/target.mp3")
@@ -40,25 +43,26 @@ export class QuoteService {
       return Promise.resolve(symbols)
          .thenForEach<string>((symbol) => {
             // Checking if symbol is already present
-            if (this._data.findIndex((j, i) => j.symbol === symbol) > -1) {
-               this._reportError(`${symbol} is a already present`)
-            } else {
+            // if (this._data.findIndex((j, i) => j.symbol === symbol) > -1) {
+            //    this._reportError(`${symbol} is a already present`)
+            // } else {
                return this._getQuotes(symbol.trim())
                   .then((resp: any) => {
+                     resp.id = Date.now()
                      resp.symbol = symbol
                      resp.cost = 0
                      resp.shares = 0
                      this._data.push(resp)
                   })
                   .catch((error: any) => this._reportError(`${symbol} -> ${error}`))
-            }
+            // }
          })
          .then(() => reply(this._data))
          .then(() => this._saveData())
    }
 
-   public delSymbol(symbol: string, reply: (value: any) => void) {
-      const i = this._data.findIndex((j, i) => j.symbol === symbol)
+   public delSymbol(msg: any, reply: (value: any) => void) {
+      const i = this._data.findIndex((j, i) => j.id === msg.id)
       if (i >= 0) this._data.splice(i, 1)
       reply(this._data)
       this._saveData()
@@ -70,7 +74,7 @@ export class QuoteService {
    
    // For updating cost, shares, target and stoploss
    public update(msg: any) {
-      const i = this._data.findIndex((j, i) => j.symbol === msg.symbol)
+      const i = this._data.findIndex((j, i) => j.id === msg.id)
       this._data[i][msg.prop] = msg.value
       this._saveData()
    }
@@ -94,7 +98,7 @@ export class QuoteService {
    private _updateQuotes() {
       if (this._stopUpdate()) {
          this._saveData() // Saving the latest prices when update is stopped.
-         console.log("Market is closed. Can't fetch!");
+         // console.log("Market is closed. Can't fetch!");
          return
       }
       return Promise.resolve(this._data.entries())
@@ -157,5 +161,14 @@ export class QuoteService {
       from = from + ":00:00"
       to = to + ":00:00"
       return !(now >= from && now <= to)   // returning false as don't stop update
+   }
+
+   private _addId() {
+      this._data.forEach((v: any, i: number) => {
+         if (!v.id) {
+            v.id = Date.now() + i
+         }
+      })
+      this._saveData()
    }
 }
