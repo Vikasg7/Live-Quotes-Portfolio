@@ -4,30 +4,32 @@ import { RouterModule } from "@angular/router"
 import { HttpModule } from "@angular/http"
 import { FormsModule } from "@angular/forms"
 
-import { AppComponent } from './components/app/app.component'
-import { HomeComponent } from './components/home/home.component'
-import { SettingsComponent } from './components/settings/settings.component'
-
-import { routes } from "./routes/routes"
-import { DataSrv } from './services/dataSrv'
-import { OnMsgSrv } from './services/onMsg'
-import { SendMsgSrv } from './services/sendMsg'
-import { ColorUp } from './directives/colorUp'
+import { App } from './components/app';
+import { routes } from './routes/routes';
+import { Home } from './components/home';
+import { Settings } from './components/settings';
+import { Logger } from './components/logger';
+import { ContentEditableOnHover } from './directives/contentEditableOnHover';
+import { ColorUp } from './directives/colorUp';
+import { DataSrv } from './services/data';
+import { ChromeMsgSrv } from './services/msg';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    SettingsComponent,
-    ColorUp
+     App,
+     Home,
+     Settings,
+     Logger,
+     ContentEditableOnHover,
+     ColorUp
+   ],
+   imports: [
+      BrowserModule,
+      RouterModule.forRoot(routes, {useHash: true}),
+      HttpModule,
+      FormsModule
   ],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot(routes),
-    HttpModule,
-    FormsModule
-  ],
-  providers: [DataSrv, OnMsgSrv, SendMsgSrv],
-  bootstrap: [AppComponent]
+  providers: [DataSrv, ChromeMsgSrv],
+  bootstrap: [App]
 })
 export class AppModule { }

@@ -1,0 +1,74 @@
+* {
+  margin: 0;
+  padding: 0; }
+
+p {
+  margin: 5px 0; }
+
+.pull-right {
+  float: right; }
+
+.pull-left {
+  float: left; }
+
+.clear-fix {
+  clear: both;
+  float: none; }
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+.red {
+  background-color: #FF3300;
+  color: white; }
+
+.green {
+  background-color: #339900;
+  color: white; }
+
+.grey {
+  background-color: white-smoke; }
+
+body {
+  min-width: 500px;
+  margin: 5px; }
+  body .app {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 25px auto 20px;
+    grid-template-areas: "head" "body" "footer"; }
+  body .head {
+    grid-area: head; }
+    body .head a {
+      margin: auto 2px; }
+  body .body {
+    grid-area: body; }
+    body .body div.home {
+      min-height: 250px;
+      overflow-y: auto; }
+      body .body div.home table {
+        min-width: 500px;
+        border: 1px solid grey;
+        border-collapse: collapse; }
+        body .body div.home table td, body .body div.home table th {
+          border: 1px solid lightgray;
+          padding: 2.5px 5px; }
+        body .body div.home table td:not([class='symbol']), body .body div.home table th:not([class='symbol']) {
+          text-align: right; }
+        body .body div.home table td.del {
+          cursor: pointer; }
+    body .body div.settings {
+      height: 250px;
+      overflow-y: auto; }
+      body .body div.settings div.setting {
+        margin: 5px 0px;
+        border: 1px solid #C8C8C8;
+        padding: 5px; }
+        body .body div.settings div.setting #from, body .body div.settings div.setting #to {
+          width: 32px; }
+  body .footer {
+    grid-area: footer; }
+    body .footer a {
+      margin: auto 2px; }

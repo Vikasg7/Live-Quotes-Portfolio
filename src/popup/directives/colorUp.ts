@@ -1,4 +1,4 @@
-import { Directive, ElementRef } from "@angular/core" 
+import { Directive, ElementRef } from "@angular/core"
 
 @Directive({
    selector: '[color-up]',
@@ -7,7 +7,7 @@ import { Directive, ElementRef } from "@angular/core"
    }
 })
 export class ColorUp {
-   constructor(private _el: ElementRef) {}
+   constructor(private _el: ElementRef) { }
 
    public onValChange() {
       const val = this._el.nativeElement.innerText

@@ -1,21 +1,19 @@
 {
-    "include": [
-        "src/**/*.ts"
-    ],
-    "compilerOptions": {
-        "target": "es6",
-        "declaration": true,
-        "module": "commonjs",
-        "sourceMap": true,
-        "moduleResolution": "node",
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "noImplicitAny": true,
-        "suppressImplicitAnyIndexErrors": true,
-        "outDir": "./dist/",
-        "lib": [
-            "es2016",
-            "dom"
-        ]
-    }
+   "compileOnSave": false,
+   "compilerOptions": {
+      "sourceMap": false,
+      "declaration": false,
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "target": "es2017",
+      "typeRoots": [
+         "node_modules/@types"
+      ],
+      "lib": [
+         "es2017",
+         "dom"
+      ]
+   }
 }

@@ -1,29 +1,38 @@
-import { QuoteService } from "./lib/service"
+import { QuoteService } from "./QuoteService";
 
 const QuoteSrv = window["QuoteSrv"] = new QuoteService()
 
 chrome.runtime.onMessage.addListener(onMessage)
 
-function onMessage(msg: any, sender: chrome.runtime.MessageSender, reply: (msg: any) => void) {
+function onMessage(msg: any, sender: any, reply: (resp: any) => void) {
+
    switch (msg.action) {
-      case "Add":
-         QuoteSrv.addSymbol(<Array<string>>msg.symbols, reply)
+
+      case "add":
+         QuoteSrv.add(msg.symbol).then(reply)
          break
-      case "Del":
-         QuoteSrv.delSymbol(msg, reply)
+
+      case "del":
+         reply(QuoteSrv.del(msg.id))
          break
-      case "Get":
-         QuoteSrv.getData(reply)
+
+      case "update":
+         reply(QuoteSrv.update(msg.q))
          break
-      case "Update":
-         QuoteSrv.update(msg)
+
+      case "get":
+         reply(QuoteSrv.get())
          break
-      case "ApiKey":
-         QuoteSrv.updateApiKey(msg)
+
+      case "apiKey": 
+         QuoteSrv.updateApiKey(msg.apiKey)
          break
-      case "UpdateInterval":
-         QuoteSrv.updateInterval(msg)
+
+      case "refreshInterval": 
+         QuoteSrv.updateRefreshInterval(msg.refreshInterval)
          break
+
    }
-   return true // this means reply will be called asynchronously
+
+   return true // this means reply method will be called asynchronously
 }

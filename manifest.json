@@ -5,10 +5,10 @@
 
    "description": "Live Quotes with a Nice Portfolio View & Target & stoploss Notifications",
 
-   "version": "4.5.3",
+   "version": "4.5.4",
 
    "icons":{
-       "128": "assets/icon128.png"
+       "128": "dist/assets/icon128.png"
     },
 
    "browser_action": {
@@ -17,7 +17,7 @@
    },
 
    "background": {
-      "page": "dist/bg/index.html",
+      "scripts": ["dist/bg/bundle.js"],
       "persistent": true
    },
    
