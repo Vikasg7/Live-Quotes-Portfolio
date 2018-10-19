@@ -383,7 +383,7 @@ Home = __decorate([
                   <td class='symbol'>{{item.symbol}}</td>
                   <td>{{item.price | number:'1.2-4'}}</td>
                   <td color-up>{{item.price - item.open | number:'1.2-4'}}</td>
-                  <td color-up>{{(item.price - item.open) * 100 / item.price | number:'1.2-2'}}</td>
+                  <td color-up>{{(item.price - item.open) * 100 / item.open | number:'1.2-2'}}</td>
                   <td content-editable-on-hover [textContent]="item.target" (input)="item.target = $event.target.textContent" (blur)="update(item)" [class.green]="item.price >= item.target && item.target !== ''" ></td>
                   <td content-editable-on-hover [textContent]="item.stoploss" (input)="item.stoploss = $event.target.textContent"  (blur)="update(item)" [class.red]="item.price <= item.stoploss && item.stoploss !== ''"></td>
                   <td content-editable-on-hover [textContent]="item.shares" (input)="item.shares = $event.target.textContent"  (blur)="update(item)"></td>
