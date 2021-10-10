@@ -45,7 +45,7 @@ class QuoteService {
             return this._data;
         }
         catch (e) {
-            this._log(e.toString());
+            this._log(`Can't add ${symbol}.`);
         }
     }
     del(id) {

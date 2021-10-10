@@ -53,7 +53,7 @@ export class QuoteService {
          this._saveData()
          this._log(`${symbol} added!`)
          return this._data
-      } catch (e) { this._log(e.toString()) }
+      } catch (e) { this._log(`Can't add ${symbol}.`) }
    }
 
    public del(id: number) {
