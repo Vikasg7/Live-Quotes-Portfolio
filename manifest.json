@@ -25,6 +25,6 @@
 
    "web_accessible_resources": ["dist/*"],
 
-   "permissions": ["storage", "tabs", "activeTab", "https://www.alphavantage.co/*", "notifications"]
+   "permissions": ["storage", "https://www.alphavantage.co/*", "notifications"]
 
 }
