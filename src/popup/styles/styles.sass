@@ -36,23 +36,18 @@ body
    margin: 5px
 
    .app
-      display: grid
-      grid-template-columns: auto
-      grid-template-rows: 25px auto 20px
-      grid-template-areas: "head" "body" "footer"
-
+      display: block
+      
    .head
-      grid-area: head
-
+      
       a
          margin: auto 2px
 
    .body
-      grid-area: body
+      
       
       div.home
          min-height: 250px
-         overflow-y: auto
    
          table
             min-width: 500px
@@ -82,7 +77,6 @@ body
                width: 32px
 
    .footer
-      grid-area: footer
-
+      
       a
          margin: auto 2px
