@@ -22,7 +22,7 @@ export class QuoteService {
    }
 
    private async _get(symbol: string): Promise<{price: number, open: number}> {
-      const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&datatype=json&apikey=${this.apiKey}`
+      const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${symbol}&datatype=json&apikey=${this.apiKey}`
       const resp = await fetch(url)
       if (resp.status >= 400) {
          throw new Error(`${resp.status} - ${resp.statusText}`)

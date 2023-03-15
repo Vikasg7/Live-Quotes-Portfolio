@@ -13,7 +13,7 @@ class QuoteService {
         this._refresh();
     }
     async _get(symbol) {
-        const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&datatype=json&apikey=${this.apiKey}`;
+        const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${symbol}&datatype=json&apikey=${this.apiKey}`;
         const resp = await fetch(url);
         if (resp.status >= 400) {
             throw new Error(`${resp.status} - ${resp.statusText}`);

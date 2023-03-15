@@ -2,7 +2,7 @@
    "manifest_version": 2,
    "name": "Live Quotes Portfolio",
    "description": "Live Quotes with a Nice Portfolio View & Target & stoploss Notifications",
-   "version": "4.5.8",
+   "version": "4.5.9",
    "icons": {
       "128": "dist/assets/icon128.png"
    },
